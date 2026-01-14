@@ -56,5 +56,5 @@ export async function POST(request: NextRequest) {
 }
 
 export const runtime = 'nodejs';
-export const maxDuration = 60;
+export const maxDuration = 60; // Vercel supports 60s on free tier
 
