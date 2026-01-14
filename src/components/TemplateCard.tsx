@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { Download, FileImage } from 'lucide-react';
 
 interface TemplateCardProps {
@@ -29,11 +30,15 @@ export default function TemplateCard({ title, imageUrl, figmaUrl }: TemplateCard
             <FileImage className="w-16 h-16 text-slate-400 dark:text-slate-600" />
           </div>
         ) : (
-          <img
+          <Image
             src={imageUrl}
             alt={title}
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            fill
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
             onError={() => setImageError(true)}
+            loading="lazy"
+            quality={75}
           />
         )}
         

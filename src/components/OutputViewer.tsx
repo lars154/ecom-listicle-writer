@@ -3,9 +3,13 @@
 import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { MessageSquare, Sparkles } from 'lucide-react';
+import type { ProductBrief } from '@/lib/types';
 
 interface OutputViewerProps {
   markdown: string;
+  brief?: ProductBrief | null;
+  onUpdateMarkdown?: (newMarkdown: string) => void;
 }
 
 interface Section {
@@ -13,9 +17,13 @@ interface Section {
   content: string;
 }
 
-export function OutputViewer({ markdown }: OutputViewerProps) {
+export function OutputViewer({ markdown, brief, onUpdateMarkdown }: OutputViewerProps) {
   const [copiedSection, setCopiedSection] = useState<string | null>(null);
   const [copiedAll, setCopiedAll] = useState(false);
+  const [revisionInstruction, setRevisionInstruction] = useState('');
+  const [isRevising, setIsRevising] = useState(false);
+  const [revisionError, setRevisionError] = useState<string | null>(null);
+  const [showRevisePanel, setShowRevisePanel] = useState(false);
 
   // Split markdown into sections based on ## headings (but not ### or #)
   const parseSections = (text: string): Section[] => {
@@ -74,6 +82,55 @@ export function OutputViewer({ markdown }: OutputViewerProps) {
     } else {
       setCopiedSection(identifier);
       setTimeout(() => setCopiedSection(null), 2000);
+    }
+  };
+
+  const handleQuickRevision = async (instruction: string) => {
+    setRevisionInstruction(instruction);
+    await handleRevise(instruction);
+  };
+
+  const handleRevise = async (instruction?: string) => {
+    const instructionToUse = instruction || revisionInstruction;
+    
+    if (!instructionToUse.trim()) {
+      setRevisionError('Please enter a revision instruction');
+      return;
+    }
+
+    setIsRevising(true);
+    setRevisionError(null);
+
+    try {
+      const response = await fetch('/api/revise', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          markdown,
+          instruction: instructionToUse,
+          brief: brief || undefined,
+        }),
+      });
+
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.error || 'Revision failed');
+      }
+
+      const data = await response.json();
+      
+      // Update the markdown via callback
+      if (onUpdateMarkdown) {
+        onUpdateMarkdown(data.markdown);
+      }
+      
+      // Clear instruction after successful revision
+      setRevisionInstruction('');
+      setRevisionError(null);
+    } catch (err: any) {
+      setRevisionError(err.message);
+    } finally {
+      setIsRevising(false);
     }
   };
 
@@ -139,17 +196,23 @@ export function OutputViewer({ markdown }: OutputViewerProps) {
               </button>
             </div>
             <div className="px-6 py-5 prose prose-sm max-w-none
+              prose-slate
               dark:prose-invert
+              text-slate-700 dark:text-slate-300
+              prose-headings:text-slate-900 dark:prose-headings:text-white
               prose-headings:font-bold
               prose-h1:text-2xl prose-h1:mb-4 prose-h1:mt-2
               prose-h2:text-xl prose-h2:mb-3 prose-h2:mt-4
               prose-h3:text-lg prose-h3:mb-2 prose-h3:mt-3
+              prose-p:text-slate-700 dark:prose-p:text-slate-300
               prose-p:leading-relaxed prose-p:mb-3
               prose-ul:my-3
               prose-ol:my-3
               prose-li:my-1
-              prose-strong:font-bold
+              prose-li:text-slate-700 dark:prose-li:text-slate-300
+              prose-strong:font-bold prose-strong:text-slate-900 dark:prose-strong:text-white
               prose-blockquote:border-l-4 prose-blockquote:pl-4 prose-blockquote:italic
+              prose-blockquote:text-slate-600 dark:prose-blockquote:text-slate-400
               prose-hr:my-6
             ">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
@@ -158,6 +221,103 @@ export function OutputViewer({ markdown }: OutputViewerProps) {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Revise with AI Panel */}
+      <div className="mt-8 border-t border-slate-200 dark:border-slate-800 pt-8">
+        <button
+          onClick={() => setShowRevisePanel(!showRevisePanel)}
+          className="flex items-center gap-2 text-[#0080FF] hover:text-[#0070E0] font-medium text-sm transition-colors mb-4"
+        >
+          <MessageSquare className="w-4 h-4" />
+          {showRevisePanel ? 'Hide' : 'Revise with AI'}
+        </button>
+
+        {showRevisePanel && (
+          <div className="bg-slate-50 dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-6 space-y-4">
+            <div className="flex items-center gap-2 mb-4">
+              <Sparkles className="w-4 h-4 text-[#0080FF]" />
+              <h3 className="text-sm font-semibold text-slate-900 dark:text-white">
+                Ask AI to revise your listicle
+              </h3>
+            </div>
+
+            {/* Quick Actions */}
+            <div className="flex flex-wrap gap-2 mb-4">
+              <button
+                onClick={() => handleQuickRevision('Make it shorter and more concise')}
+                disabled={isRevising}
+                className="px-3 py-1.5 text-xs font-medium bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-md hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Make it shorter
+              </button>
+              <button
+                onClick={() => handleQuickRevision('Make it more concise while keeping all key benefits')}
+                disabled={isRevising}
+                className="px-3 py-1.5 text-xs font-medium bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-md hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                More concise
+              </button>
+              <button
+                onClick={() => handleQuickRevision('Make the tone more playful and conversational')}
+                disabled={isRevising}
+                className="px-3 py-1.5 text-xs font-medium bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-md hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                More playful
+              </button>
+              <button
+                onClick={() => handleQuickRevision('Make the tone more professional and serious')}
+                disabled={isRevising}
+                className="px-3 py-1.5 text-xs font-medium bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-md hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                More professional
+              </button>
+            </div>
+
+            {/* Custom Instruction */}
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-slate-900 dark:text-white">
+                Or type a custom instruction
+              </label>
+              <textarea
+                value={revisionInstruction}
+                onChange={(e) => setRevisionInstruction(e.target.value)}
+                placeholder="E.g., Add more social proof with customer counts, make the CTA more urgent, include a testimonial after reason #3, emphasize the risk-free trial..."
+                rows={3}
+                disabled={isRevising}
+                className="w-full px-4 py-3 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0080FF] focus:border-transparent transition-all resize-none disabled:opacity-50 disabled:cursor-not-allowed"
+              />
+            </div>
+
+            <button
+              onClick={() => handleRevise()}
+              disabled={isRevising || !revisionInstruction.trim()}
+              className="w-full py-3 px-4 bg-[#0080FF] text-white text-sm font-medium rounded-lg hover:bg-[#0070E0] transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isRevising ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  Revising...
+                </>
+              ) : (
+                <>
+                  <Sparkles className="w-4 h-4" />
+                  Revise Listicle
+                </>
+              )}
+            </button>
+
+            {revisionError && (
+              <div className="p-3 bg-red-50 dark:bg-red-950/20 rounded-lg border border-red-200 dark:border-red-800">
+                <p className="text-sm text-red-700 dark:text-red-300">{revisionError}</p>
+              </div>
+            )}
+
+            <p className="text-xs text-slate-500 dark:text-slate-500">
+              💡 Tip: The AI will only use facts from your product page. It won't invent new features or benefits.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

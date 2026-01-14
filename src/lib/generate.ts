@@ -11,6 +11,11 @@ export async function generateListicle(
   brief: ProductBrief,
   request: GenerationRequest
 ): Promise<string> {
+  // Check if API key is set
+  if (!process.env.ANTHROPIC_API_KEY) {
+    throw new Error('ANTHROPIC_API_KEY environment variable is not set');
+  }
+  
   // Load the 3 markdown guides
   const [blueprint, examples, copyGuide] = await Promise.all([
     loadGuide('The Ultimate Listicle Blueprint.md'),
@@ -24,19 +29,49 @@ export async function generateListicle(
   // Build the user prompt
   const userPrompt = buildUserPrompt(brief, request, examples);
 
-  // Call Claude Opus 4.5
-  const response = await anthropic.messages.create({
-    model: 'claude-opus-4-5-20251101',
-    max_tokens: 16000,
-    temperature: 1,
-    system: systemPrompt,
-    messages: [
-      {
-        role: 'user',
-        content: userPrompt,
-      },
-    ],
-  });
+  // Call Claude Opus 4.5 with retry logic
+  let response;
+  let lastError;
+  
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      response = await anthropic.messages.create({
+        model: 'claude-opus-4-5-20251101',
+        max_tokens: 16000,
+        temperature: 1,
+        system: systemPrompt,
+        messages: [
+          {
+            role: 'user',
+            content: userPrompt,
+          },
+        ],
+      });
+      break; // Success, exit retry loop
+    } catch (error: any) {
+      lastError = error;
+      console.error(`Attempt ${attempt} failed:`, error.status, error.message);
+      
+      // If it's an overload error and we have retries left, wait and try again
+      if (error.status === 529 && attempt < 3) {
+        const waitTime = attempt * 2000; // 2s, 4s
+        await new Promise(resolve => setTimeout(resolve, waitTime));
+        continue;
+      }
+      
+      // For other errors or last attempt, throw
+      if (attempt === 3) {
+        if (error.status === 529) {
+          throw new Error('Anthropic API is currently overloaded. Please try again in a few moments.');
+        }
+        throw error;
+      }
+    }
+  }
+  
+  if (!response) {
+    throw lastError || new Error('Failed to get response from Claude');
+  }
 
   // Extract markdown text from response
   const textContent = response.content.find((block) => block.type === 'text');
@@ -48,7 +83,7 @@ export async function generateListicle(
 }
 
 async function loadGuide(filename: string): Promise<string> {
-  const guidesPath = join(process.cwd(), '..', filename);
+  const guidesPath = join(process.cwd(), 'guides', filename);
   return await readFile(guidesPath, 'utf-8');
 }
 
@@ -72,6 +107,13 @@ ${copyGuide}
 - Never import concepts from a different product category
 - If context is unclear, work with what you have—don't fill gaps with assumptions from unrelated categories
 
+⚠️ **HEADLINES MUST BE SPECIFIC AND DESCRIPTIVE**
+- Every headline MUST include the product name OR specific category/problem it solves
+- Headlines must clearly communicate the value proposition—readers should know what problem this product addresses
+- NEVER use vague headlines like "I finally found something that helped" or "This changed everything"
+- Instead: "I Tried [Specific Product]—Here's My Honest Review" or "5 Reasons This [Category] Supplement Eased My [Specific Problem]"
+- The headline should pass this test: "If someone only read the headline, would they know what product/category this is about?"
+
 ⚠️ **EACH LIST ITEM MUST BE UNIQUE**
 - Every numbered reason must cover a DIFFERENT angle (per the Hybrid Listicles guidance: "Structure the list so each reason covers a different angle")
 - Don't repeat the same theme across multiple bullets
@@ -81,6 +123,15 @@ ${copyGuide}
 - Use ONLY provided testimonials, review snippets, and verified stats from the product brief
 - NEVER fabricate fake customer quotes, made-up names, or invented proof
 - If real proof isn't available for a section, skip it entirely or use only the verified data provided
+
+⚠️ **SOCIAL PROOF PLACEMENT (FLEXIBLE)**
+- Per the blueprint: "After a key reason, add a testimonial, star rating, or customer count"
+- Social proof can appear in multiple ways—use what fits the listicle naturally:
+  - **Quick Proof section**: Review counts, star ratings, badges (e.g., "22,000+ Five-Star Reviews")
+  - **As a dedicated list item**: e.g., "Join the community that's made over 100 MILLION coffees" or "Great reviews and 30-Day Money Back Guarantee"
+  - **Within other list items**: Sprinkle testimonials or stats after key points
+  - **Final CTA section**: Testimonial quote or customer count
+- Social proof as a list item is optional—it can be its own reason OR woven into other sections. Use judgment based on the listicle flow and available proof.
 
 # Output requirements
 
@@ -108,6 +159,27 @@ function buildUserPrompt(
 
   const additionalInfoSection = request.additionalInfo
     ? `\n\n# Additional context from user\n\n${request.additionalInfo}\n\n⚠️ IMPORTANT: Use this context strategically, but remember - each numbered list item must cover a DIFFERENT angle. Don't repeat the same theme across multiple bullets.`
+    : '';
+
+  // Check if Review/First-Person mode is selected
+  const isFirstPersonMode = request.modes.includes('ReviewOrEditorialFirstPerson');
+  const firstPersonInstructions = isFirstPersonMode
+    ? `\n\n# ⚠️ First-Person/Review Listicle Requirements
+
+Since you're writing a FIRST-PERSON/REVIEW listicle:
+
+1. **HEADLINES MUST BE SPECIFIC**: Follow the blueprint pattern: "I Tried [Product Name] – Here's My Honest Review" or reference broader buzz like "I Tried the [Product] Everyone's Talking About"
+   - BAD: "I finally found something that helped" (too vague, no product/category)
+   - GOOD: "I Tried the Grüns Gummies Everyone's Talking About – Here's My Honest Review"
+
+2. **LIST ITEMS ARE EXPERIENCE-DRIVEN**: Each list item should be a personal experience/benefit (e.g., "It Helped Beat the Bloat", "No More Mid-Day Crashes", "I'm Focused AF")
+
+3. **SOCIAL PROOF IS FLEXIBLE**: Social proof can validate the personal narrative in various ways:
+   - As its own list item (e.g., "Join the community of 100,000+ customers")
+   - In the Quick Proof section (review counts, star ratings)
+   - In the Final CTA section
+   - Woven into other list items as supporting evidence
+   - Use what feels natural for the flow—not every first-person listicle needs a dedicated social proof list item`
     : '';
 
   return `Generate a landing-page listicle using the following context and requirements.
@@ -158,13 +230,14 @@ ${socialProofSection}
 ${offerSection}
 
 ${additionalInfoSection}
+${firstPersonInstructions}
 
 # Your task
 
 Generate a complete landing-page listicle using the blueprint, copy guide, and example patterns below.
 
 ## Example patterns for reference (learn from structure and style)
-${examples.slice(0, 50000)}
+${examples.slice(0, 20000)}
 
 ## Output format requirements
 
@@ -173,7 +246,7 @@ Generate clean, well-formatted Markdown with CLEAR SECTIONS using ## headings. E
 **Required structure:**
 
 ## Headline Options
-[3-5 numbered headline options with specific promises]
+[3-5 numbered headline options - EACH must include the product name or specific category/problem. No vague headlines like "This changed everything."]
 
 ## Subheadline & Introduction
 [Subheadline + slippery-slope intro paragraph + CTA options]
@@ -201,7 +274,7 @@ Generate clean, well-formatted Markdown with CLEAR SECTIONS using ## headings. E
 [5-8 Q&A pairs]
 
 ## Final CTA
-[Recap + social proof line + final CTA]
+[Recap + social proof line (testimonial, customer count, or star rating if available) + final CTA]
 
 **Critical formatting rules:**
 - Use ## for main section headings (makes them individually copyable)

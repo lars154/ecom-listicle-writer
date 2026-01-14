@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
     const markdown = await generateListicle(brief, validatedRequest);
     console.log(`Generated listicle markdown`);
 
-    return NextResponse.json({ markdown, brief });
+    return NextResponse.json({ markdown });
   } catch (error: any) {
     console.error('Generation error:', error);
     

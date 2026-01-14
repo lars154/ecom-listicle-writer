@@ -135,7 +135,7 @@ export function ListicleForm({ onSubmit, loading }: ListicleFormProps) {
             value={additionalInfo}
             onChange={(e) => setAdditionalInfo(e.target.value)}
             disabled={loading}
-            placeholder="E.g., Mention our 60-day guarantee, use the phrase 'game-changer', highlight the 2-for-1 bundle offer..."
+            placeholder="E.g., Include 'Over 1,000,000 customers have switched', use CTA 'Claim My 50% Discount', mention our 90-day risk-free trial, highlight celebrity endorsements..."
             rows={4}
             className="w-full px-4 py-3 bg-surface border border-border rounded-lg text-sm text-text placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all resize-none disabled:opacity-50 disabled:cursor-not-allowed"
           />

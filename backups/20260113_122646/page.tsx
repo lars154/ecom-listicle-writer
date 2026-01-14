@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react';
 import { Moon, Sun, Sparkles, ArrowRight, Info } from 'lucide-react';
-import type { ListicleMode, ProductBrief } from '@/lib/types';
+import type { ListicleMode } from '@/lib/types';
 import TemplatesGrid from '@/components/TemplatesGrid';
 import { OutputViewer } from '@/components/OutputViewer';
 
@@ -92,7 +92,6 @@ export default function Home() {
   const [additionalInfo, setAdditionalInfo] = useState('');
   const [loading, setLoading] = useState(false);
   const [output, setOutput] = useState<string | null>(null);
-  const [brief, setBrief] = useState<ProductBrief | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [urlError, setUrlError] = useState(false);
   const [typesError, setTypesError] = useState(false);
@@ -159,16 +158,11 @@ export default function Home() {
 
       const data = await response.json();
       setOutput(data.markdown);
-      setBrief(data.brief || null);
     } catch (err: any) {
       setError(err.message);
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleUpdateMarkdown = (newMarkdown: string) => {
-    setOutput(newMarkdown);
   };
 
   return (
@@ -393,7 +387,7 @@ export default function Home() {
                   <textarea
                     value={additionalInfo}
                     onChange={(e) => setAdditionalInfo(e.target.value)}
-                    placeholder="E.g., Include 'Over 1,000,000 customers have switched', use CTA 'Claim My 50% Discount', mention our 90-day risk-free trial, highlight celebrity endorsements..."
+                    placeholder="E.g., Mention our 60-day guarantee, use the phrase 'game-changer', highlight the 2-for-1 bundle offer..."
                     rows={5}
                     className="w-full px-4 py-3 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0080FF] focus:border-transparent transition-all resize-none"
                   />
@@ -402,6 +396,15 @@ export default function Home() {
             </div>
 
             {/* Output Display */}
+            {loading && (
+              <div className="mt-12 p-8 bg-slate-50 dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800">
+                <div className="flex items-center justify-center gap-3">
+                  <div className="w-5 h-5 border-2 border-[#0080FF] border-t-transparent rounded-full animate-spin"></div>
+                  <p className="text-slate-700 dark:text-slate-300">Generating your listicle...</p>
+                </div>
+              </div>
+            )}
+
             {error && (
               <div className="mt-12 p-6 bg-red-50 dark:bg-red-950/20 rounded-lg border border-red-200 dark:border-red-800">
                 <h3 className="text-sm font-semibold text-red-900 dark:text-red-400 mb-2">Error</h3>
@@ -411,11 +414,7 @@ export default function Home() {
 
             {output && (
               <div className="mt-12">
-                <OutputViewer 
-                  markdown={output} 
-                  brief={brief}
-                  onUpdateMarkdown={handleUpdateMarkdown}
-                />
+                <OutputViewer markdown={output} />
               </div>
             )}
           </div>
