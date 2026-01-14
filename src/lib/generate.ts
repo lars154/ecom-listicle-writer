@@ -1,11 +1,105 @@
 import Anthropic from '@anthropic-ai/sdk';
-import { readFile } from 'fs/promises';
-import { join } from 'path';
 import type { ProductBrief, GenerationRequest } from './types';
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 });
+
+// Inline guides for serverless compatibility
+const LISTICLE_BLUEPRINT = `# The Ultimate Listicle Blueprint
+
+## Why Listicles Work
+Listicles are the most flexible, shareable, and conversion-friendly format in digital marketing.
+
+They work because they:
+- **Create commitment:** If you read #1, you'll read #2 (Zeigarnik Effect)
+- **Are scannable:** Perfect for mobile and short attention spans
+- **Feel educational:** They teach, not just sell
+- **Build trust:** Use testimonials, expert quotes, and customer counts
+- **Are versatile:** Use them for problem awareness, solution comparison, product differentiation, or direct sales
+
+## Anatomy of a High-Converting Listicle
+1. **Numbered Headline** - Use a number and a clear promise
+2. **Short, Relatable Introduction** - Open with a pain, question, or scenario
+3. **Numbered List Items** - Each with a clear headline, 2–3 sentences, and a relevant image
+4. **Social Proof Throughout** - After a key reason, add a testimonial, star rating, or customer count
+5. **Product Introduction** - After 3–5 reasons, introduce your product as the answer
+6. **Offer/CTA** - State your offer with specific CTA
+7. **FAQ Section** - Answer 5–8 common questions or objections
+8. **Final CTA and Recap** - Recap the main benefit, restate the offer
+
+## Listicle Types
+- Problem/Symptom Awareness: "5 Signs You Need..."
+- Comparison: "10 Reasons to Ditch X For Y"
+- Social Proof: "5 Reasons 1,000,000+ People Made The Switch"
+- Expert Endorsement: "5 Reasons Why [Expert] Loves [Product]"
+- First-Person Review: "I Tried [Product]—Here's My Honest Review"
+- Kit/Bundle: "5 Reasons Why This Kit Is a Must-Have"
+- How-To/Routine: "How to [Result] in X Steps"
+- Myth-Busting: "7 Myths About [Category]"
+- Urgency/Trend: "7 Reasons to Try [Product] Before [Event]"
+- Mistakes: "5 Mistakes You're Making With [Category]"
+- Hybrid: Mix and match multiple angles`;
+
+const COPY_GUIDE = `# How To Write Good Copy For E-Commerce
+
+## Core Principles
+- **Benefits over features:** Don't say "Made with premium materials" say "Feels luxurious on your skin"
+- **Specific over vague:** Don't say "Fast results" say "See results in 14 days"
+- **Conversational tone:** Write like you're talking to a friend
+- **Scannable format:** Short paragraphs, bullet points, bold key phrases
+
+## Key Rules
+- Make CTAs fun: Never use "Learn more" or "Buy Now" - use "Pick my color" or "Claim My Discount"
+- Keep copy short and punchy with brief sentences and simple words
+- Use active voice: "Our serum clears acne fast" not "acne is cleared by our serum"
+- Write like you talk with a conversational tone
+- Leverage social proof with customer testimonials and reviews
+- Address objections upfront
+- Create urgency with deadlines or limited availability
+- Hook them with a question or relatable problem
+
+## AIDA Framework
+- **Attention:** Grab their attention with a compelling headline
+- **Interest:** Build interest with benefits and stories
+- **Desire:** Create desire with social proof and specific outcomes
+- **Action:** Clear CTA telling them exactly what to do
+
+## The Slippery Slope
+The goal of your first sentence: get people to read the second sentence.
+Readers will keep reading in proportion to the amount they've already read.`;
+
+const EXAMPLE_PATTERNS = `# Example Listicle Patterns
+
+## Pattern 1: Problem Awareness
+"5 Signs You Need to Switch to [Product]"
+- List common pain points the audience experiences
+- Position product as the natural solution
+- Use "you" language throughout
+
+## Pattern 2: Social Proof
+"X Reasons [Number] People Made the Switch"
+- Lead with impressive customer count
+- Use real testimonial snippets
+- Show transformation/results
+
+## Pattern 3: Expert Endorsement
+"Why [Expert Name] Recommends [Product]"
+- Establish expert credibility first
+- Quote the expert directly
+- List their specific reasons
+
+## Pattern 4: First-Person Review
+"I Tried [Product] – Here's What Happened"
+- Personal narrative structure
+- Honest pros and cons
+- Final verdict with recommendation
+
+## Pattern 5: Comparison
+"X Reasons to Ditch [Old Solution] for [New Solution]"
+- Side-by-side comparisons
+- Highlight unique differentiators
+- Address common objections`;
 
 export async function generateListicle(
   brief: ProductBrief,
@@ -16,12 +110,10 @@ export async function generateListicle(
     throw new Error('ANTHROPIC_API_KEY environment variable is not set');
   }
   
-  // Load the 3 markdown guides
-  const [blueprint, examples, copyGuide] = await Promise.all([
-    loadGuide('The Ultimate Listicle Blueprint.md'),
-    loadGuide('Example Listicles Copy List.md'),
-    loadGuide('How To Write Good Copy For E-Commerce.md'),
-  ]);
+  // Use inline guides for serverless compatibility
+  const blueprint = LISTICLE_BLUEPRINT;
+  const examples = EXAMPLE_PATTERNS;
+  const copyGuide = COPY_GUIDE;
 
   // Build the system prompt
   const systemPrompt = buildSystemPrompt(blueprint, copyGuide);
@@ -82,10 +174,6 @@ export async function generateListicle(
   return textContent.text;
 }
 
-async function loadGuide(filename: string): Promise<string> {
-  const guidesPath = join(process.cwd(), 'guides', filename);
-  return await readFile(guidesPath, 'utf-8');
-}
 
 function buildSystemPrompt(blueprint: string, copyGuide: string): string {
   return `You are an expert e-commerce copywriter specializing in landing-page listicles. You write conversion-focused, benefit-driven, scannable copy optimized for Replo/Shopify landing pages.
