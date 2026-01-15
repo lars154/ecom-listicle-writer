@@ -52,6 +52,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signInWithEmail = async (email: string, password: string) => {
+    const { data: allowed, error: checkError } = await supabase
+      .from('allowed_emails')
+      .select('email')
+      .eq('email', email.toLowerCase())
+      .maybeSingle();
+
+    if (checkError) {
+      throw new Error('Failed to verify access permissions');
+    }
+
+    if (!allowed) {
+      throw new Error('This email address is not authorized to access the app. Please contact the administrator.');
+    }
+
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -60,6 +74,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signUpWithEmail = async (email: string, password: string) => {
+    const { data: allowed, error: checkError } = await supabase
+      .from('allowed_emails')
+      .select('email')
+      .eq('email', email.toLowerCase())
+      .maybeSingle();
+
+    if (checkError) {
+      throw new Error('Failed to verify access permissions');
+    }
+
+    if (!allowed) {
+      throw new Error('This email address is not authorized to access the app. Please contact the administrator.');
+    }
+
     const { error } = await supabase.auth.signUp({
       email,
       password,
