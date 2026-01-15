@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { Button } from '@/components/ui/Button';
-import { Spinner } from '@/components/ui/Spinner';
+import { Sparkles } from 'lucide-react';
 
 export function AuthScreen() {
   const { signInWithGoogle } = useAuth();
@@ -22,35 +21,49 @@ export function AuthScreen() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-slate-950 px-4">
       <div className="w-full max-w-md">
-        <div className="bg-white rounded-2xl shadow-xl p-8 space-y-8">
-          <div className="text-center space-y-3">
-            <div className="flex justify-center mb-4">
-              <div className="w-16 h-16 bg-gradient-to-br from-slate-700 to-slate-900 rounded-xl flex items-center justify-center">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                </svg>
-              </div>
+        <div className="text-center space-y-8">
+          <div className="flex justify-center mb-8">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/conversion_edge_logo.png"
+              alt="Conversion Edge Logo"
+              className="h-12"
+            />
+          </div>
+
+          <div className="space-y-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-950 border border-blue-800 rounded-full">
+              <Sparkles className="w-3.5 h-3.5 text-[#0080FF]" />
+              <span className="text-xs font-medium text-blue-400">AI-Powered Copywriting</span>
             </div>
-            <h1 className="text-3xl font-bold text-slate-900">Welcome</h1>
-            <p className="text-slate-600">Sign in to access your listicle writer</p>
+
+            <h1 className="text-4xl sm:text-5xl font-bold text-white tracking-tight">
+              Ecom Listicle Writer
+            </h1>
+            <p className="text-slate-400 max-w-sm mx-auto">
+              Sign in to start creating compelling, conversion-focused listicle content.
+            </p>
           </div>
 
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-              <p className="text-sm text-red-800">{error}</p>
+            <div className="bg-red-950/30 border border-red-800 rounded-lg p-4">
+              <p className="text-sm text-red-400">{error}</p>
             </div>
           )}
 
-          <div className="space-y-4">
-            <Button
+          <div className="space-y-4 pt-4">
+            <button
               onClick={handleGoogleSignIn}
               disabled={loading}
-              className="w-full bg-white hover:bg-slate-50 text-slate-900 border-2 border-slate-200 hover:border-slate-300 font-semibold py-3 px-4 rounded-xl transition-all duration-200 flex items-center justify-center gap-3"
+              className="w-full bg-white hover:bg-slate-50 text-slate-900 border-2 border-slate-200 hover:border-slate-300 font-semibold py-3.5 px-6 rounded-xl transition-all duration-200 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? (
-                <Spinner size="sm" />
+                <>
+                  <div className="w-5 h-5 border-2 border-slate-900 border-t-transparent rounded-full animate-spin"></div>
+                  Signing in...
+                </>
               ) : (
                 <>
                   <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -74,12 +87,12 @@ export function AuthScreen() {
                   Continue with Google
                 </>
               )}
-            </Button>
+            </button>
           </div>
 
-          <div className="pt-6 border-t border-slate-200">
+          <div className="pt-8">
             <p className="text-xs text-center text-slate-500">
-              By signing in, you agree to our Terms of Service and Privacy Policy
+              Built by LPG. All rights reserved.
             </p>
           </div>
         </div>
