@@ -59,24 +59,26 @@ export function AuthScreen() {
       <div className="min-h-screen flex items-center justify-center bg-white dark:bg-slate-950 px-4 transition-colors duration-200">
         <div className="w-full max-w-md">
           <div className="text-center space-y-8">
-            <div className="flex justify-between items-center mb-8">
+            <div className="flex justify-between items-center mb-8 sm:mb-12">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/conversion_edge_logo.png"
                 alt="Conversion Edge Logo"
-                className="h-12"
+                className="h-10 sm:h-12"
               />
-              <button
-                onClick={() => setDarkMode(!darkMode)}
-                className="p-2.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                aria-label="Toggle dark mode"
-              >
-                {darkMode ? (
-                  <Sun className="w-5 h-5 text-slate-400" />
-                ) : (
-                  <Moon className="w-5 h-5 text-slate-600" />
-                )}
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setDarkMode(!darkMode)}
+                  className="p-2.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                  aria-label="Toggle dark mode"
+                >
+                  {darkMode ? (
+                    <Sun className="w-5 h-5 text-slate-400" />
+                  ) : (
+                    <Moon className="w-5 h-5 text-slate-600" />
+                  )}
+                </button>
+              </div>
             </div>
 
             <div className="space-y-4">
