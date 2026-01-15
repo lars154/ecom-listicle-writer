@@ -56,32 +56,33 @@ export function AuthScreen() {
 
   return (
     <div className={darkMode ? 'dark' : ''}>
-      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-slate-950 px-4 transition-colors duration-200">
-        <div className="w-full max-w-md">
-          <div className="text-center space-y-8">
-            <div className="flex justify-between items-center mb-8 sm:mb-12">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/conversion_edge_logo.png"
-                alt="Conversion Edge Logo"
-                className="h-10 sm:h-12"
-              />
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => setDarkMode(!darkMode)}
-                  className="p-2.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                  aria-label="Toggle dark mode"
-                >
-                  {darkMode ? (
-                    <Sun className="w-5 h-5 text-slate-400" />
-                  ) : (
-                    <Moon className="w-5 h-5 text-slate-600" />
-                  )}
-                </button>
-              </div>
+      <div className="min-h-screen bg-white dark:bg-slate-950 transition-colors duration-200">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-16">
+          <div className="flex justify-between items-center mb-8 sm:mb-12">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/conversion_edge_logo.png"
+              alt="Conversion Edge Logo"
+              className="h-10 sm:h-12"
+            />
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setDarkMode(!darkMode)}
+                className="p-2.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                aria-label="Toggle dark mode"
+              >
+                {darkMode ? (
+                  <Sun className="w-5 h-5 text-slate-400" />
+                ) : (
+                  <Moon className="w-5 h-5 text-slate-600" />
+                )}
+              </button>
             </div>
+          </div>
 
-            <div className="space-y-4">
+          <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
+            <div className="w-full max-w-md text-center space-y-8">
+              <div className="space-y-4">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-full">
                 <Sparkles className="w-3.5 h-3.5 text-[#0080FF]" />
                 <span className="text-xs font-medium text-[#0080FF] dark:text-blue-400">AI-Powered Copywriting</span>
@@ -216,10 +217,11 @@ export function AuthScreen() {
               )}
             </div>
 
-            <div className="pt-8">
-              <p className="text-xs text-center text-slate-500">
-                Built by LPG. All rights reserved.
-              </p>
+              <div className="pt-8">
+                <p className="text-xs text-center text-slate-500">
+                  Built by LPG. All rights reserved.
+                </p>
+              </div>
             </div>
           </div>
         </div>
