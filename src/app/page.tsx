@@ -1,11 +1,13 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Moon, Sun, Sparkles, ArrowRight, Info } from 'lucide-react';
+import { Moon, Sun, Sparkles, ArrowRight, Info, LogOut } from 'lucide-react';
 import type { ListicleMode, ProductBrief } from '@/lib/types';
 import TemplatesGrid from '@/components/TemplatesGrid';
 import { OutputViewer } from '@/components/OutputViewer';
 import { BlueprintContent } from '@/components/BlueprintContent';
+import { useAuth } from '@/contexts/AuthContext';
+import { AuthScreen } from '@/components/AuthScreen';
 
 const listicleTypes: { id: string; label: string; mode: ListicleMode; description: string }[] = [
   { 
@@ -85,6 +87,7 @@ const listicleTypes: { id: string; label: string; mode: ListicleMode; descriptio
 type Tab = 'writer' | 'templates' | 'blueprint';
 
 export default function Home() {
+  const { user, loading: authLoading, signOut } = useAuth();
   const [darkMode, setDarkMode] = useState(true);
   const [activeTab, setActiveTab] = useState<Tab>('writer');
   const [url, setUrl] = useState('');
@@ -181,6 +184,18 @@ export default function Home() {
     setOutput(newMarkdown);
   };
 
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-slate-950">
+        <div className="w-8 h-8 border-3 border-[#0080FF] border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <AuthScreen />;
+  }
+
   return (
     <div className={darkMode ? 'dark' : ''}>
       <div className="min-h-screen bg-white dark:bg-slate-950 transition-colors duration-200">
@@ -193,17 +208,26 @@ export default function Home() {
               className="h-10 sm:h-12"
             />
 
-            <button
-              onClick={() => setDarkMode(!darkMode)}
-              className="p-2.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-              aria-label="Toggle dark mode"
-            >
-              {darkMode ? (
-                <Sun className="w-5 h-5 text-slate-400" />
-              ) : (
-                <Moon className="w-5 h-5 text-slate-600" />
-              )}
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setDarkMode(!darkMode)}
+                className="p-2.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                aria-label="Toggle dark mode"
+              >
+                {darkMode ? (
+                  <Sun className="w-5 h-5 text-slate-400" />
+                ) : (
+                  <Moon className="w-5 h-5 text-slate-600" />
+                )}
+              </button>
+              <button
+                onClick={signOut}
+                className="p-2.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                aria-label="Sign out"
+              >
+                <LogOut className="w-5 h-5 text-slate-400" />
+              </button>
+            </div>
           </div>
 
           <div className="mb-12 sm:mb-16">
