@@ -2,3 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Prevent white flash on overscroll */
+html, body {
+  min-height: 100%;
+  overscroll-behavior-y: none;
+}
+
+/* Light mode background */
+html {
+  background-color: #ffffff;
+}
+
+/* Dark mode background - applied when .dark class is on html */
+html.dark {
+  background-color: #020617; /* slate-950 */
+}
+
+html.dark body {
+  background-color: #020617;
+}
+

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Moon, Sun, Sparkles, ArrowRight, Info } from 'lucide-react';
 import type { ListicleMode, ProductBrief } from '@/lib/types';
 import TemplatesGrid from '@/components/TemplatesGrid';
@@ -98,6 +98,15 @@ export default function Home() {
   const [urlError, setUrlError] = useState(false);
   const [typesError, setTypesError] = useState(false);
   const [openTooltip, setOpenTooltip] = useState<string | null>(null);
+
+  // Sync dark mode class to html element for proper background on overscroll
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
 
   const urlRef = useRef<HTMLDivElement>(null);
   const typesRef = useRef<HTMLDivElement>(null);
