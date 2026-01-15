@@ -1,14 +1,13 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Moon, Sun, Sparkles, ArrowRight, Info, LogOut, Settings } from 'lucide-react';
+import { Moon, Sun, Sparkles, ArrowRight, Info, LogOut } from 'lucide-react';
 import type { ListicleMode, ProductBrief } from '@/lib/types';
 import TemplatesGrid from '@/components/TemplatesGrid';
 import { OutputViewer } from '@/components/OutputViewer';
 import { BlueprintContent } from '@/components/BlueprintContent';
 import { useAuth } from '@/contexts/AuthContext';
 import { AuthScreen } from '@/components/AuthScreen';
-import Link from 'next/link';
 
 const listicleTypes: { id: string; label: string; mode: ListicleMode; description: string }[] = [
   { 
@@ -210,13 +209,6 @@ export default function Home() {
             />
 
             <div className="flex items-center gap-2">
-              <Link
-                href="/admin"
-                className="p-2.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                aria-label="Admin settings"
-              >
-                <Settings className="w-5 h-5 text-slate-400" />
-              </Link>
               <button
                 onClick={() => setDarkMode(!darkMode)}
                 className="p-2.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
