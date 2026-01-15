@@ -5,6 +5,7 @@ import { Moon, Sun, Sparkles, ArrowRight, Info } from 'lucide-react';
 import type { ListicleMode, ProductBrief } from '@/lib/types';
 import TemplatesGrid from '@/components/TemplatesGrid';
 import { OutputViewer } from '@/components/OutputViewer';
+import { BlueprintContent } from '@/components/BlueprintContent';
 
 const listicleTypes: { id: string; label: string; mode: ListicleMode; description: string }[] = [
   { 
@@ -81,10 +82,10 @@ const listicleTypes: { id: string; label: string; mode: ListicleMode; descriptio
   },
 ];
 
-type Tab = 'writer' | 'templates';
+type Tab = 'writer' | 'templates' | 'blueprint';
 
 export default function Home() {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
   const [activeTab, setActiveTab] = useState<Tab>('writer');
   const [url, setUrl] = useState('');
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
@@ -174,7 +175,7 @@ export default function Home() {
   return (
     <div className={darkMode ? 'dark' : ''}>
       <div className="min-h-screen bg-white dark:bg-slate-950 transition-colors duration-200">
-        <div className={`${activeTab === 'writer' ? 'max-w-3xl' : 'max-w-7xl'} mx-auto px-4 sm:px-6 py-8 sm:py-16 ${activeTab === 'writer' ? 'pb-32 sm:pb-36' : ''}`}>
+        <div className={`${activeTab === 'writer' ? 'max-w-3xl' : 'max-w-7xl'} mx-auto px-4 sm:px-6 py-8 sm:py-16 ${activeTab === 'writer' ? 'pb-32 sm:pb-36' : 'pb-8'}`}>
           <div className="flex justify-between items-center mb-8 sm:mb-12">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -239,12 +240,27 @@ export default function Home() {
                   <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#0080FF]" />
                 )}
               </button>
+              <button
+                onClick={() => setActiveTab('blueprint')}
+                className={`pb-4 px-1 relative text-sm font-medium transition-colors ${
+                  activeTab === 'blueprint'
+                    ? 'text-[#0080FF]'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-300'
+                }`}
+              >
+                The Ultimate Listicle Blueprint
+                {activeTab === 'blueprint' && (
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#0080FF]" />
+                )}
+              </button>
             </div>
           </div>
 
           {/* Tab Content */}
           {activeTab === 'templates' ? (
             <TemplatesGrid />
+          ) : activeTab === 'blueprint' ? (
+            <BlueprintContent />
           ) : (
             <div className="space-y-8">
             <div>
