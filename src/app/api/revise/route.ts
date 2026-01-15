@@ -13,6 +13,10 @@ const ReviseRequest = z.object({
   brief: ProductBrief.optional(),
 });
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+export const maxDuration = 60;
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -193,6 +197,3 @@ Revise the listicle markdown above according to the user's instruction. Remember
 
 Generate the revised markdown now:`;
 }
-
-export const runtime = 'nodejs';
-export const maxDuration = 60;

@@ -3,6 +3,10 @@ import { GenerationRequest } from '@/lib/types';
 import { extractFromUrl } from '@/lib/extract';
 import { generateListicle } from '@/lib/generate';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+export const maxDuration = 60;
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -53,8 +57,5 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
-
-export const runtime = 'nodejs';
-export const maxDuration = 60; // Vercel supports 60s on free tier
+} // Vercel supports 60s on free tier
 
