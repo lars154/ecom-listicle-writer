@@ -1,94 +1,108 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Moon, Sun, Sparkles, ArrowRight, Info } from 'lucide-react';
+import { Sparkles, ArrowRight, Info, LogOut, AlertCircle, ArrowLeftRight, Users, Award, MessageSquare, Package, ListChecks, Lightbulb, TrendingUp, XCircle, Heart, Layers, ChevronDown, Link } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import type { ListicleMode, ProductBrief } from '@/lib/types';
 import TemplatesGrid from '@/components/TemplatesGrid';
 import { OutputViewer } from '@/components/OutputViewer';
 import { BlueprintContent } from '@/components/BlueprintContent';
+import { logout, getUser, isAuthenticated } from '@/lib/auth';
 
-const listicleTypes: { id: string; label: string; mode: ListicleMode; description: string }[] = [
+const listicleTypes: { id: string; label: string; mode: ListicleMode; description: string; icon: any }[] = [
   { 
     id: 'problem', 
     label: 'Problem/Symptom Awareness', 
     mode: 'ProblemOrSymptomAwareness',
-    description: 'Highlights relatable problems or symptoms your audience experiences. Great for introducing solutions to pain points they didn\'t know existed. Example: "5 Signs You Need to Add Creatine to Your Routine"'
+    description: 'Highlights relatable problems or symptoms your audience experiences. Great for introducing solutions to pain points they didn\'t know existed. Example: "5 Signs You Need to Add Creatine to Your Routine"',
+    icon: AlertCircle
   },
   { 
     id: 'comparison', 
     label: 'Comparison / Category Switch', 
     mode: 'ComparisonOrCategorySwitch',
-    description: 'Contrasts old solutions with your new/better approach. Perfect for positioning against competitors or outdated methods. Example: "10 Reasons to Ditch [Old Solution] For [New Solution]"'
+    description: 'Contrasts old solutions with your new/better approach. Perfect for positioning against competitors or outdated methods. Example: "10 Reasons to Ditch [Old Solution] For [New Solution]"',
+    icon: ArrowLeftRight
   },
   { 
     id: 'social-proof', 
     label: 'Social Proof / Reasons to Buy', 
     mode: 'SocialProofOrReasonsToBuy',
-    description: 'Focuses on why customers love the product, backed by testimonials and reviews. Best for building trust and credibility through real customer experiences. Example: "5 Reasons 1,000,000+ [Audience] Are Making The Switch"'
+    description: 'Focuses on why customers love the product, backed by testimonials and reviews. Best for building trust and credibility through real customer experiences. Example: "5 Reasons 1,000,000+ [Audience] Are Making The Switch"',
+    icon: Users
   },
   { 
     id: 'expert', 
     label: 'Expert / Celebrity Endorsement', 
     mode: 'ExpertOrCelebrityEndorsement',
-    description: 'Features expert opinions, celebrity users, or influencer endorsements. Leverages authority and credibility from recognized figures. Example: "5 Reasons Why [Expert/Celebrity] Loves [Product]"'
+    description: 'Features expert opinions, celebrity users, or influencer endorsements. Leverages authority and credibility from recognized figures. Example: "5 Reasons Why [Expert/Celebrity] Loves [Product]"',
+    icon: Award
   },
   { 
     id: 'review', 
     label: 'Review / First-Person', 
     mode: 'ReviewOrEditorialFirstPerson',
-    description: 'Written from a personal reviewer perspective with authentic experience. Creates relatability through a genuine testing journey. Example: "I Tried [Product]—Here\'s My Honest Review"'
+    description: 'Written from a personal reviewer perspective with authentic experience. Creates relatability through a genuine testing journey. Example: "I Tried [Product]—Here\'s My Honest Review"',
+    icon: MessageSquare
   },
   { 
     id: 'kit', 
     label: 'Kit / Bundle Breakdown', 
     mode: 'KitOrBundleBreakdown',
-    description: 'Explains each component of a bundle or kit. Ideal for multi-product sets or subscription boxes to showcase value and variety.'
+    description: 'Explains each component of a bundle or kit. Ideal for multi-product sets or subscription boxes to showcase value and variety.',
+    icon: Package
   },
   { 
     id: 'how-to', 
     label: 'How-To / Routine', 
     mode: 'HowToOrRoutine',
-    description: 'Step-by-step guides showing how to use the product or integrate it into daily routines. Perfect for educational content and demonstrating ease of use.'
+    description: 'Step-by-step guides showing how to use the product or integrate it into daily routines. Perfect for educational content and demonstrating ease of use.',
+    icon: ListChecks
   },
   { 
     id: 'myth-busting', 
     label: 'Myth-Busting / Educational', 
     mode: 'MythBustingOrEducational',
-    description: 'Challenges common misconceptions in your category. Great for positioning your brand as an expert while addressing customer doubts or industry myths.'
+    description: 'Challenges common misconceptions in your category. Great for positioning your brand as an expert while addressing customer doubts or industry myths.',
+    icon: Lightbulb
   },
   { 
     id: 'urgency', 
     label: 'Urgency / Trend', 
     mode: 'UrgencyOrTrend',
-    description: 'Taps into trending topics, seasonal moments, or time-sensitive opportunities. Creates FOMO and positions product as part of current movements.'
+    description: 'Taps into trending topics, seasonal moments, or time-sensitive opportunities. Creates FOMO and positions product as part of current movements.',
+    icon: TrendingUp
   },
   { 
     id: 'mistakes', 
     label: 'Mistakes / Doing It Wrong', 
     mode: 'MistakeOrDoingItWrong',
-    description: 'Points out common mistakes people make in your category. Positions your product as the solution to avoid these pitfalls. Example: "10 Reasons You\'re Not Lazy, You\'re Just Breathing Wrong"'
+    description: 'Points out common mistakes people make in your category. Positions your product as the solution to avoid these pitfalls. Example: "10 Reasons You\'re Not Lazy, You\'re Just Breathing Wrong"',
+    icon: XCircle
   },
   { 
     id: 'persona', 
     label: 'Persona / Reasons to Love', 
     mode: 'PersonaOrReasonsToLove',
-    description: 'Speaks to specific customer personas or segments. Tailors messaging to resonate with particular audience types, lifestyles, or needs.'
+    description: 'Speaks to specific customer personas or segments. Tailors messaging to resonate with particular audience types, lifestyles, or needs.',
+    icon: Heart
   },
   { 
     id: 'hybrid', 
     label: 'Hybrid (Multiple Angles)', 
     mode: 'Hybrid',
-    description: 'Combines multiple listicle approaches for comprehensive coverage. Use when one angle isn\'t enough to tell the full story.'
+    description: 'Combines multiple listicle approaches for comprehensive coverage. Use when one angle isn\'t enough to tell the full story.',
+    icon: Layers
   },
 ];
 
 type Tab = 'writer' | 'templates' | 'blueprint';
 
 export default function Home() {
-  const [darkMode, setDarkMode] = useState(true);
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<Tab>('writer');
   const [url, setUrl] = useState('');
-  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  const [selectedType, setSelectedType] = useState<string | null>(null);
   const [numberOfItems, setNumberOfItems] = useState(5);
   const [additionalInfo, setAdditionalInfo] = useState('');
   const [loading, setLoading] = useState(false);
@@ -98,25 +112,28 @@ export default function Home() {
   const [urlError, setUrlError] = useState(false);
   const [typesError, setTypesError] = useState(false);
   const [openTooltip, setOpenTooltip] = useState<string | null>(null);
+  const [user, setUser] = useState<any>(null);
+  const [additionalInfoExpanded, setAdditionalInfoExpanded] = useState(false);
 
-  // Sync dark mode class to html element for proper background on overscroll
   useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
+    // Check authentication on mount
+    if (!isAuthenticated()) {
+      router.push('/login');
+      return;
     }
-  }, [darkMode]);
+    setUser(getUser());
+  }, [router]);
+
+  // Always set dark mode
+  useEffect(() => {
+    document.documentElement.classList.add('dark');
+  }, []);
 
   const urlRef = useRef<HTMLDivElement>(null);
   const typesRef = useRef<HTMLDivElement>(null);
 
-  const toggleType = (typeId: string) => {
-    setSelectedTypes(prev =>
-      prev.includes(typeId)
-        ? prev.filter(id => id !== typeId)
-        : [...prev, typeId]
-    );
+  const selectType = (typeId: string) => {
+    setSelectedType(typeId);
     // Clear error when user selects a type
     if (typesError) {
       setTypesError(false);
@@ -136,7 +153,7 @@ export default function Home() {
       return;
     }
 
-    if (selectedTypes.length === 0) {
+    if (!selectedType) {
       setTypesError(true);
       typesRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
@@ -147,16 +164,17 @@ export default function Home() {
     setOutput(null);
 
     try {
-      const selectedModes = selectedTypes.map(id => 
-        listicleTypes.find(type => type.id === id)?.mode
-      ).filter(Boolean) as ListicleMode[];
+      const selectedMode = listicleTypes.find(type => type.id === selectedType)?.mode;
+      if (!selectedMode) {
+        throw new Error('Invalid listicle type selected');
+      }
 
       const response = await fetch('/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           url,
-          modes: selectedModes,
+          modes: [selectedMode],
           itemCount: numberOfItems,
           additionalInfo: additionalInfo.trim() || undefined,
         }),
@@ -181,9 +199,14 @@ export default function Home() {
     setOutput(newMarkdown);
   };
 
+  const handleLogout = () => {
+    logout();
+    router.push('/login');
+  };
+
   return (
-    <div className={darkMode ? 'dark' : ''}>
-      <div className="min-h-screen bg-white dark:bg-slate-950 transition-colors duration-200">
+    <div className="dark">
+      <div className="min-h-screen bg-slate-950">
         <div className={`${activeTab === 'writer' ? 'max-w-3xl' : 'max-w-7xl'} mx-auto px-4 sm:px-6 py-8 sm:py-16 ${activeTab === 'writer' ? 'pb-32 sm:pb-36' : 'pb-8'}`}>
           <div className="flex justify-between items-center mb-8 sm:mb-12">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -193,17 +216,21 @@ export default function Home() {
               className="h-10 sm:h-12"
             />
 
-            <button
-              onClick={() => setDarkMode(!darkMode)}
-              className="p-2.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-              aria-label="Toggle dark mode"
-            >
-              {darkMode ? (
-                <Sun className="w-5 h-5 text-slate-400" />
-              ) : (
-                <Moon className="w-5 h-5 text-slate-600" />
+            <div className="flex items-center gap-2">
+              {user && (
+                <div className="mr-2 text-sm text-slate-400 hidden sm:block">
+                  {user.name}
+                </div>
               )}
-            </button>
+              <button
+                onClick={handleLogout}
+                className="p-2.5 rounded-full hover:bg-slate-800 transition-colors"
+                aria-label="Logout"
+                title="Logout"
+              >
+                <LogOut className="w-5 h-5 text-slate-400" />
+              </button>
+            </div>
           </div>
 
           <div className="mb-12 sm:mb-16">
@@ -244,7 +271,7 @@ export default function Home() {
                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-300'
                 }`}
               >
-                Figma Templates
+                Templates
                 {activeTab === 'templates' && (
                   <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#0080FF]" />
                 )}
@@ -257,7 +284,7 @@ export default function Home() {
                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-300'
                 }`}
               >
-                The Ultimate Listicle Blueprint
+                Blueprint
                 {activeTab === 'blueprint' && (
                   <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#0080FF]" />
                 )}
@@ -273,32 +300,31 @@ export default function Home() {
           ) : (
             <div className="space-y-8">
             <div>
-              <h2 className="text-sm font-semibold text-slate-900 dark:text-white mb-6 tracking-wide uppercase">
-                Configure
-              </h2>
-
               <div className="space-y-8">
                 <div ref={urlRef}>
-                  <label className="block text-sm font-medium text-slate-900 dark:text-white mb-2">
-                    Product or Landing Page URL
+                  <label className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
+                    Step 1: Paste Product or Landing Page URL
                   </label>
                   <div className={`relative rounded-lg transition-all ${
                     urlError ? '' : 'bg-gradient-to-r from-blue-500 via-[#0080FF] to-cyan-500 p-[2px]'
                   }`}>
-                    <input
-                      type="url"
-                      value={url}
-                      onChange={(e) => {
-                        setUrl(e.target.value);
-                        if (urlError) setUrlError(false);
-                      }}
-                      placeholder="https://example.myshopify.com/products/..."
-                      className={`w-full px-4 py-3 bg-white dark:bg-slate-900 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 transition-all ${
-                        urlError
-                          ? 'border-2 border-red-500 focus:ring-red-500'
-                          : 'focus:ring-[#0080FF] focus:ring-offset-0'
-                      }`}
-                    />
+                    <div className="relative">
+                      <Link className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" strokeWidth={1.5} />
+                      <input
+                        type="url"
+                        value={url}
+                        onChange={(e) => {
+                          setUrl(e.target.value);
+                          if (urlError) setUrlError(false);
+                        }}
+                        placeholder="www.mysite.com"
+                        className={`w-full pl-12 pr-4 py-3 bg-white dark:bg-slate-900 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 transition-all ${
+                          urlError
+                            ? 'border-2 border-red-500 focus:ring-red-500'
+                            : 'focus:ring-[#0080FF] focus:ring-offset-0'
+                        }`}
+                      />
+                    </div>
                   </div>
                   {urlError ? (
                     <p className="text-sm text-red-600 dark:text-red-400 mt-2">
@@ -312,83 +338,86 @@ export default function Home() {
                 </div>
 
                 <div ref={typesRef}>
-                  <label className="block text-sm font-medium text-slate-900 dark:text-white mb-2">
-                    Listicle Type(s) <span className="text-red-500">*</span>
+                  <label className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
+                    Step 2: Select Listicle Type
                   </label>
                   {typesError ? (
                     <p className="text-sm text-red-600 dark:text-red-400 mb-4">
-                      Please select at least one listicle type.
+                      Please select a listicle type.
                     </p>
                   ) : (
                     <p className="text-xs text-slate-500 dark:text-slate-500 mb-4">
-                      Select one or more. Hybrid mode combines multiple angles.
+                      Choose one. This determines both the headline style and content voice.
                     </p>
                   )}
 
-                  <div className="space-y-2">
-                    {listicleTypes.map((type) => (
-                      <div key={type.id} className="relative">
-                        <label
-                          className={`flex items-center gap-3 px-4 py-3.5 border rounded-lg cursor-pointer transition-all ${
-                            selectedTypes.includes(type.id)
-                              ? 'bg-blue-50 dark:bg-blue-950/30 border-[#0080FF]'
-                              : typesError
-                              ? 'bg-white dark:bg-slate-950 border-red-500 hover:border-red-600'
-                              : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
-                          }`}
-                          onClick={() => toggleType(type.id)}
-                        >
-                          <div className={`relative flex items-center justify-center w-4 h-4 rounded border-2 transition-colors ${
-                            selectedTypes.includes(type.id)
-                              ? 'bg-[#0080FF] border-[#0080FF]'
-                              : 'border-slate-300 bg-white dark:bg-slate-950'
-                          }`}>
-                            {selectedTypes.includes(type.id) && (
-                              <svg className="w-3 h-3 text-white" viewBox="0 0 12 12" fill="none">
-                                <path d="M10 3L4.5 8.5L2 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                              </svg>
-                            )}
-                          </div>
-                          <span className="text-sm text-slate-900 dark:text-white flex-1">
-                            {type.label}
-                          </span>
-                          <button
-                            type="button"
-                            className="ml-auto text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              setOpenTooltip(openTooltip === type.id ? null : type.id);
-                            }}
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+                    {listicleTypes.map((type) => {
+                      const Icon = type.icon;
+                      return (
+                        <div key={type.id} className="relative">
+                          <div
+                            onClick={() => selectType(type.id)}
+                            className={`relative flex flex-col items-center justify-center p-4 border rounded-xl transition-all cursor-pointer group ${
+                              selectedType === type.id
+                                ? 'bg-blue-50 dark:bg-slate-900 border-[#0087FF]/20'
+                                : typesError
+                                ? 'bg-white dark:bg-slate-900/50 border-red-500 hover:border-red-600'
+                                : 'bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-700/50 hover:border-[#0087FF]/20 hover:bg-slate-50 dark:hover:bg-slate-900'
+                            }`}
                           >
-                            <Info className="w-4 h-4" />
-                          </button>
-                        </label>
-                        {openTooltip === type.id && (
-                          <div className="absolute z-10 mt-2 p-3 bg-slate-800 dark:bg-slate-700 text-white text-sm rounded-lg shadow-lg max-w-sm left-0 right-0">
-                            <div className="relative">
-                              {type.description}
-                              <button
-                                className="absolute -top-1 -right-1 text-slate-400 hover:text-white"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setOpenTooltip(null);
-                                }}
-                              >
-                                ×
-                              </button>
+                            <div className="mb-2 p-2 rounded-lg border transition-colors bg-gradient-to-r from-[#0087FF]/30 to-[#0044FF]/20 border-[#0080FF]/30">
+                              <Icon className="w-4 h-4 text-[#0087FF]" strokeWidth={1.5} />
                             </div>
+                            <div className={`text-xs font-medium text-center transition-colors leading-tight ${
+                              selectedType === type.id
+                                ? 'text-[#0080FF] dark:text-white'
+                                : 'text-slate-600 dark:text-slate-300'
+                            }`}>
+                              {type.label}
+                            </div>
+                            <button
+                              type="button"
+                              className={`absolute top-2.5 right-2.5 p-1 rounded-full transition-all ${
+                                selectedType === type.id
+                                  ? 'text-slate-400 hover:text-slate-600 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-800'
+                                  : 'text-slate-400 dark:text-slate-500 opacity-0 group-hover:opacity-100 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800'
+                              }`}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                setOpenTooltip(openTooltip === type.id ? null : type.id);
+                              }}
+                            >
+                              <Info className="w-4 h-4" />
+                            </button>
                           </div>
-                        )}
-                      </div>
-                    ))}
+                          {openTooltip === type.id && (
+                            <div className="absolute z-10 mt-2 w-full min-w-[280px] p-3 bg-slate-800 text-white text-sm rounded-lg shadow-lg">
+                              <div className="relative">
+                                {type.description}
+                                <button
+                                  className="absolute -top-1 -right-1 text-slate-400 hover:text-white"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setOpenTooltip(null);
+                                  }}
+                                >
+                                  ×
+                                </button>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
 
                 <div>
                   <div className="flex items-baseline justify-between mb-2">
-                    <label className="block text-sm font-medium text-slate-900 dark:text-white">
-                      Number of List Items
+                    <label className="block text-sm font-semibold text-slate-900 dark:text-white">
+                      Step 3: Select Number of List Items
                     </label>
                     <span className="text-2xl font-semibold text-slate-900 dark:text-white">
                       {numberOfItems}
@@ -400,7 +429,7 @@ export default function Home() {
                     max="12"
                     value={numberOfItems}
                     onChange={(e) => setNumberOfItems(Number(e.target.value))}
-                    className="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full appearance-none cursor-pointer accent-[#0080FF]"
+                    className="w-full h-2 bg-gradient-to-r from-[#0087FF]/20 to-[#0044FF]/10 dark:from-[#0087FF]/30 dark:to-[#0044FF]/20 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#0080FF] [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:shadow-blue-500/30"
                   />
                   <div className="flex justify-between text-xs text-slate-500 dark:text-slate-500 mt-2">
                     <span>3 (short)</span>
@@ -408,20 +437,31 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-slate-900 dark:text-white mb-2">
-                    Additional Information <span className="text-slate-400 dark:text-slate-500 font-normal">(Optional)</span>
-                  </label>
-                  <p className="text-xs text-slate-500 dark:text-slate-500 mb-3">
-                    Add any specific copy, words to use, product details, or offer information you want to include in the listicle.
-                  </p>
-                  <textarea
-                    value={additionalInfo}
-                    onChange={(e) => setAdditionalInfo(e.target.value)}
-                    placeholder="E.g., Include 'Over 1,000,000 customers have switched', use CTA 'Claim My 50% Discount', mention our 90-day risk-free trial, highlight celebrity endorsements..."
-                    rows={5}
-                    className="w-full px-4 py-3 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0080FF] focus:border-transparent transition-all resize-none"
-                  />
+                <div className="pb-8">
+                  <button
+                    type="button"
+                    onClick={() => setAdditionalInfoExpanded(!additionalInfoExpanded)}
+                    className="flex items-center justify-between w-full text-left"
+                  >
+                    <label className="block text-sm font-semibold text-slate-900 dark:text-white cursor-pointer">
+                      Additional Information <span className="text-slate-400 dark:text-slate-500 font-normal">(Optional)</span>
+                    </label>
+                    <ChevronDown className={`w-5 h-5 text-slate-400 transition-transform ${additionalInfoExpanded ? 'rotate-180' : ''}`} />
+                  </button>
+                  {additionalInfoExpanded && (
+                    <div className="mt-3">
+                      <p className="text-xs text-slate-500 dark:text-slate-500 mb-3">
+                        Add any specific copy, words to use, product details, or offer information you want to include in the listicle.
+                      </p>
+                      <textarea
+                        value={additionalInfo}
+                        onChange={(e) => setAdditionalInfo(e.target.value)}
+                        placeholder="E.g., Include 'Over 1,000,000 customers have switched', use CTA 'Claim My 50% Discount', mention our 90-day risk-free trial, highlight celebrity endorsements..."
+                        rows={5}
+                        className="w-full px-4 py-3 bg-slate-900/50 border border-[#1E273B] rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-slate-600 focus:bg-slate-900 transition-all resize-none"
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

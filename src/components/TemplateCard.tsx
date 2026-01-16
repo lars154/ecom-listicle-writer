@@ -20,7 +20,11 @@ export default function TemplateCard({ title, imageUrl, figmaUrl }: TemplateCard
 
   return (
     <div
-      className="relative group cursor-pointer overflow-hidden rounded-lg border border-slate-200 dark:border-slate-800 transition-all duration-300 hover:shadow-lg"
+      className={`relative group cursor-pointer overflow-hidden rounded-lg transition-all duration-300 ${
+        isHovered 
+          ? 'border-2 border-[#0087FF]' 
+          : 'border border-slate-200 dark:border-slate-800'
+      }`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -61,7 +65,7 @@ export default function TemplateCard({ title, imageUrl, figmaUrl }: TemplateCard
         
         {/* Overlay on hover */}
         <div
-          className={`absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 flex items-center justify-center ${
+          className={`absolute inset-0 bg-[#0F172A]/80 backdrop-blur-sm transition-opacity duration-300 flex items-center justify-center ${
             isHovered ? 'opacity-100' : 'opacity-0'
           }`}
         >

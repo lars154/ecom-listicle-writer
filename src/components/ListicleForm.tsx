@@ -21,12 +21,12 @@ const LISTICLE_MODES: { value: ListicleMode; label: string }[] = [
   { value: 'UrgencyOrTrend', label: 'Urgency / Trend' },
   { value: 'MistakeOrDoingItWrong', label: 'Mistakes / Doing It Wrong' },
   { value: 'PersonaOrReasonsToLove', label: 'Persona / Reasons to Love' },
-  { value: 'Hybrid', label: 'Hybrid (Multiple Angles)' },
+  { value: 'Hybrid', label: 'Hybrid (Mix Angles Freely)' },
 ];
 
 export function ListicleForm({ onSubmit, loading }: ListicleFormProps) {
   const [url, setUrl] = useState('');
-  const [selectedModes, setSelectedModes] = useState<ListicleMode[]>(['SocialProofOrReasonsToBuy']);
+  const [selectedMode, setSelectedMode] = useState<ListicleMode>('SocialProofOrReasonsToBuy');
   const [itemCount, setItemCount] = useState(5);
   const [additionalInfo, setAdditionalInfo] = useState('');
 
@@ -34,18 +34,10 @@ export function ListicleForm({ onSubmit, loading }: ListicleFormProps) {
     e.preventDefault();
     onSubmit({
       url,
-      modes: selectedModes,
+      modes: [selectedMode], // Keep as array for API compatibility
       itemCount,
       additionalInfo: additionalInfo.trim() || undefined,
     });
-  };
-
-  const toggleMode = (mode: ListicleMode) => {
-    if (selectedModes.includes(mode)) {
-      setSelectedModes(selectedModes.filter(m => m !== mode));
-    } else {
-      setSelectedModes([...selectedModes, mode]);
-    }
   };
 
   return (
@@ -76,18 +68,18 @@ export function ListicleForm({ onSubmit, loading }: ListicleFormProps) {
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-semibold text-text mb-1">
-              Listicle Type(s) <span className="text-accent">*</span>
+              Listicle Type <span className="text-accent">*</span>
             </label>
             <p className="text-xs text-text-muted mb-3">
-              Select one or more. Hybrid mode combines multiple angles.
+              Choose one. This determines both the headline style and content voice.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {LISTICLE_MODES.map((mode) => (
               <TogglePill
                 key={mode.value}
-                selected={selectedModes.includes(mode.value)}
-                onClick={() => toggleMode(mode.value)}
+                selected={selectedMode === mode.value}
+                onClick={() => setSelectedMode(mode.value)}
                 disabled={loading}
               >
                 {mode.label}
@@ -146,7 +138,7 @@ export function ListicleForm({ onSubmit, loading }: ListicleFormProps) {
           variant="primary"
           size="lg"
           fullWidth
-          disabled={loading || !url || selectedModes.length === 0}
+          disabled={loading || !url}
         >
           {loading ? (
             <>

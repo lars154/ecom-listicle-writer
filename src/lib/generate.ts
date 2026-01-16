@@ -39,7 +39,15 @@ They work because they:
 - Myth-Busting: "7 Myths About [Category]"
 - Urgency/Trend: "7 Reasons to Try [Product] Before [Event]"
 - Mistakes: "5 Mistakes You're Making With [Category]"
-- Hybrid: Mix and match multiple angles`;
+- Hybrid: Mix and match multiple ANGLES within list items, BUT the headline TYPE determines the narrative voice throughout
+
+## Hybrid Listicle Rules
+- Pick two or more types (e.g., social proof + comparison + feature/benefit)
+- Structure the list so each reason covers a different angle
+- CRITICAL: The HEADLINE determines the NARRATIVE FRAME for all content
+  - First-person headline = first-person experience content
+  - Symptom headline = second-person pain point content
+  - You can mix benefit angles, but NOT narrative voices`;
 
 const COPY_GUIDE = `# How To Write Good Copy For E-Commerce
 
@@ -71,35 +79,45 @@ Readers will keep reading in proportion to the amount they've already read.`;
 
 const EXAMPLE_PATTERNS = `# Example Listicle Patterns
 
-## Pattern 1: Problem Awareness
-"5 Signs You Need to Switch to [Product]"
-- List common pain points the audience experiences
-- Position product as the natural solution
-- Use "you" language throughout
+## Pattern 1: Problem/Symptom Awareness
+Headline: "5 Signs You Need to Add [Product] to Your Routine"
+List items (second-person, symptom-focused):
+- "You Feel Tired All the Time"
+- "Your Muscles Are Sore and Your Recovery Is Slow"
+- "You're Not Seeing Results Despite Trying Everything"
+Voice: "You might be...", "If you're experiencing...", "You've probably noticed..."
 
-## Pattern 2: Social Proof
-"X Reasons [Number] People Made the Switch"
-- Lead with impressive customer count
-- Use real testimonial snippets
-- Show transformation/results
+## Pattern 2: First-Person Review
+Headline: "I Tried [Product] – Here's My Honest Review"
+List items (first-person, experience-driven):
+- "It Helped Beat the Bloat"
+- "No More Mid-Day Crashes"
+- "I'm Focused AF"
+- "It Replaces a Countertop Full of Supplements"
+Voice: "I noticed...", "For me...", "My experience was..."
 
-## Pattern 3: Expert Endorsement
-"Why [Expert Name] Recommends [Product]"
-- Establish expert credibility first
-- Quote the expert directly
-- List their specific reasons
+## Pattern 3: Social Proof
+Headline: "X Reasons [Number] People Made the Switch"
+List items (benefit-driven with proof):
+- "Proven Results Backed by 22,000+ Reviews"
+- "Made with [Quality Ingredient] – the Gold Standard"
+- "Join the Community That's Made 100 Million Coffees"
+Voice: Third-person authority with testimonials
 
-## Pattern 4: First-Person Review
-"I Tried [Product] – Here's What Happened"
-- Personal narrative structure
-- Honest pros and cons
-- Final verdict with recommendation
+## Pattern 4: Expert Endorsement
+Headline: "5 Reasons Why [Expert Name] Loves [Product]"
+List items (expert-quoted):
+- "It's Made with [Quality Ingredient]" – with expert quote
+- "It Fits My Clients' Busy Lifestyles" – with expert explanation
+Voice: Expert-driven with quotes
 
-## Pattern 5: Comparison
-"X Reasons to Ditch [Old Solution] for [New Solution]"
-- Side-by-side comparisons
-- Highlight unique differentiators
-- Address common objections`;
+## Pattern 5: Hybrid (IMPORTANT)
+You can MIX benefit angles (social proof + comparison + features) BUT:
+- The HEADLINE determines the NARRATIVE VOICE
+- First-person headline = ALL content is first-person experience
+- Symptom headline = ALL content addresses reader pain
+- WRONG: First-person headline with symptom content ("I Tried..." → "You Feel Tired...")
+- RIGHT: First-person headline with varied first-person benefits ("I Tried..." → "It Gave Me Energy", "It Simplified My Routine")`;
 
 export async function generateListicle(
   brief: ProductBrief,
@@ -188,6 +206,30 @@ ${copyGuide}
 
 # CRITICAL RULES
 
+⚠️ **HEADLINE AND CONTENT MUST MATCH (MOST IMPORTANT)**
+The headline sets the NARRATIVE FRAME for the entire listicle. The content MUST stay within that frame:
+
+1. **First-Person/Review Headlines** → First-Person Content
+   - Headline: "I Tried [Product]—Here's My Honest Review"
+   - Content: Personal experience items ("It Helped Beat the Bloat", "No More Mid-Day Crashes", "I'm Focused AF")
+   - Voice: "I noticed...", "For me...", "My experience was..."
+   
+2. **Problem/Symptom Headlines** → Second-Person Pain Content
+   - Headline: "5 Signs You Need to Add [Product] to Your Routine"
+   - Content: Symptom items ("You Feel Tired All the Time", "Your Muscles Are Sore")
+   - Voice: "You might be...", "If you're experiencing...", "You've probably noticed..."
+   
+3. **Social Proof Headlines** → Benefit/Community Content
+   - Headline: "5 Reasons 1,000,000+ People Made The Switch"
+   - Content: Benefit-driven reasons with testimonials/stats
+   - Voice: Third-person authority with proof
+   
+4. **Expert Headlines** → Expert-Quoted Content
+   - Headline: "5 Reasons Why [Expert] Loves [Product]"
+   - Content: Expert quotes and credibility-driven reasons
+
+**FOR HYBRID LISTICLES:** You CAN mix different benefit angles (social proof + comparison + features) within the list items, BUT the HEADLINE determines the overall narrative voice. A first-person headline MUST have first-person content. A symptom-awareness headline MUST address reader pain points. Never mix a first-person headline with problem/symptom content or vice versa.
+
 ⚠️ **STAY TRUE TO THE ACTUAL PRODUCT**
 - You will receive extracted product information from a real webpage
 - Write ONLY about what's explicitly stated in that product brief
@@ -261,6 +303,8 @@ Since you're writing a FIRST-PERSON/REVIEW listicle:
    - GOOD: "I Tried the Grüns Gummies Everyone's Talking About – Here's My Honest Review"
 
 2. **LIST ITEMS ARE EXPERIENCE-DRIVEN**: Each list item should be a personal experience/benefit (e.g., "It Helped Beat the Bloat", "No More Mid-Day Crashes", "I'm Focused AF")
+   - WRONG: "You Feel Tired All the Time" (this is symptom-awareness, not first-person)
+   - RIGHT: "It Gave Me Steady Energy All Day" (personal experience)
 
 3. **SOCIAL PROOF IS FLEXIBLE**: Social proof can validate the personal narrative in various ways:
    - As its own list item (e.g., "Join the community of 100,000+ customers")
@@ -268,6 +312,32 @@ Since you're writing a FIRST-PERSON/REVIEW listicle:
    - In the Final CTA section
    - Woven into other list items as supporting evidence
    - Use what feels natural for the flow—not every first-person listicle needs a dedicated social proof list item`
+    : '';
+
+  // Check if hybrid mode is selected
+  const isHybridMode = request.modes.includes('Hybrid');
+  const hybridModeInstructions = isHybridMode
+    ? `\n\n# ⚠️ HYBRID MODE: Mix Multiple Angles, But Keep Voice Consistent
+
+You are writing a HYBRID listicle that combines multiple angles. CRITICAL RULES:
+
+1. **CHOOSE ONE HEADLINE TYPE FIRST**: The headline determines the narrative frame for the ENTIRE listicle
+   - First-person headline ("I Tried...") → ALL list items must be personal experiences
+   - Symptom headline ("5 Signs You Need...") → ALL list items must address reader pain points
+   - Social proof headline ("Why 1M+ People...") → list items should be benefit-driven with proof
+   - Comparison headline ("X Reasons to Ditch...") → list items compare old vs new solution
+
+2. **MIX BENEFIT ANGLES WITHIN THAT FRAME**:
+   - CORRECT: First-person headline → personal experiences covering social proof, features, benefits, comparison angles
+     - "I Joined 100,000+ Happy Customers" (social proof in first-person)
+     - "It Replaced My Entire Supplement Cabinet" (comparison in first-person)
+     - "The Quality Blew Me Away" (feature in first-person)
+   - CORRECT: Symptom headline → different symptoms/problems the reader experiences
+   - WRONG: First-person headline with symptom content ("I Tried..." → "You feel tired all the time")
+
+3. **VARIETY IN ANGLES, CONSISTENCY IN VOICE**:
+   - Each list item can cover a different angle (social proof, comparison, features, benefits)
+   - But ALL items must use the same narrative voice set by the headline`
     : '';
 
   return `Generate a landing-page listicle using the following context and requirements.
@@ -319,6 +389,7 @@ ${offerSection}
 
 ${additionalInfoSection}
 ${firstPersonInstructions}
+${hybridModeInstructions}
 
 # Your task
 
