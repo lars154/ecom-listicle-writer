@@ -181,3 +181,26 @@ export const GenerationRequest = z.object({
 
 export type GenerationRequest = z.infer<typeof GenerationRequest>;
 
+
+// Headline option for two-step generation
+export const HeadlineOption = z.object({
+  headline: z.string(),
+  angle: z.string(), // e.g., "Social Proof", "First-Person Review", "Problem Awareness"
+  description: z.string(), // Brief explanation of the approach
+});
+
+export type HeadlineOption = z.infer<typeof HeadlineOption>;
+
+// Response from headline generation
+export const HeadlineOptionsResponse = z.object({
+  headlines: z.array(HeadlineOption).min(3).max(5),
+});
+
+export type HeadlineOptionsResponse = z.infer<typeof HeadlineOptionsResponse>;
+
+// Request for full listicle generation (after headline selection)
+export const FullListicleRequest = GenerationRequest.extend({
+  selectedHeadline: HeadlineOption,
+});
+
+export type FullListicleRequest = z.infer<typeof FullListicleRequest>;
