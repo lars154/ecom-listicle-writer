@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Ensure box-sizing is always border-box (fixes Vercel/production inconsistency) */
+*,
+*::before,
+*::after {
+  box-sizing: border-box !important;
+}
+
+/* Prevent white flash on overscroll */
+html, body {
+  min-height: 100%;
+  overscroll-behavior-y: none;
+}
+
+/* Light mode background */
+html {
+  background-color: #ffffff;
+}
+
+/* Dark mode background - applied when .dark class is on html */
+html.dark {
+  background-color: #020617; /* slate-950 */
+}
+
+html.dark body {
+  background-color: #020617;
+}
+
+/* Custom gradient backgrounds for listicle type icons */
+.icon-gradient-bg {
+  background: linear-gradient(to right, rgba(0, 135, 255, 0.3), rgba(0, 68, 255, 0.2));
+  border-color: rgba(0, 128, 255, 0.3);
+}
+
+/* Slider track gradient */
+.slider-track {
+  background: linear-gradient(to right, rgba(0, 135, 255, 0.3), rgba(0, 68, 255, 0.2));
+}
+
+/* Range slider styling - applied globally for consistency across environments */
+input[type="range"] {
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  background: linear-gradient(to right, rgba(0, 135, 255, 0.3), rgba(0, 68, 255, 0.2)) !important;
+  border-radius: 9999px;
+  height: 0.5rem;
+  border: none;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  background: transparent;
+  height: 0.5rem;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 9999px;
+  background: #0080FF !important;
+  cursor: pointer;
+  box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3);
+  border: none;
+  margin-top: -0.25rem;
+}
+
+input[type="range"]::-moz-range-track {
+  background: transparent;
+  height: 0.5rem;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 9999px;
+  background: #0080FF !important;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3);
+}
