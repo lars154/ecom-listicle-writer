@@ -5,7 +5,7 @@ An AI-powered e-commerce listicle generator for landing pages, powered by Claude
 ## Features
 
 - 🔗 **URL-first**: Paste a Shopify product or landing page URL
-- 📝 **12 listicle types**: From myth-busting to how-to's, covering all patterns from the blueprint
+- 📝 **5 listicle types**: 5 distinct narrative voices covering all high-converting patterns
 - 🎨 **Copy/paste blocks**: Pre-formatted sections ready for Replo or Shopify
 - 🤖 **Grounded AI**: Uses your 3 markdown guides as knowledge base
 - ⚡ **Fast**: Generates in 30–60 seconds
@@ -41,20 +41,13 @@ An AI-powered e-commerce listicle generator for landing pages, powered by Claude
 3. **Output**: Returns structured JSON blocks (Hero, Items, Proof, Offer, FAQ, Final CTA)
 4. **Copy/paste**: Each block has a copy button for easy Replo/Shopify integration
 
-## Listicle modes supported
+## Listicle types supported (5 narrative voices)
 
-- ❗ Problem/Symptom Awareness
-- ⚖️ Comparison / Category Switch
-- ⭐ Social Proof / Reasons to Buy
-- 👤 Expert / Celebrity Endorsement
-- ✍️ Review / First-Person
-- 📦 Kit / Bundle Breakdown
-- 📋 How-To / Routine
-- 💡 Myth-Busting / Educational
-- ⚡ Urgency / Trend
-- ❌ Mistakes / Doing It Wrong
-- 💕 Persona / Reasons to Love
-- 🔀 Hybrid (Multiple Angles)
+- ✍️ **FirstPersonReview** - "I Tried [Product] – Here's My Honest Review"
+- ❗ **ProblemAwareness** - "5 Signs You Need...", "X Mistakes You're Making..."
+- ⭐ **SocialProofAuthority** - "5 Reasons 1M+ People...", "Why [Expert] Loves..."
+- ⚖️ **Comparison** - "10 Reasons to Ditch [Old] for [New]"
+- 🔀 **Hybrid** - Mix angles within one consistent voice
 
 ## Project structure
 
