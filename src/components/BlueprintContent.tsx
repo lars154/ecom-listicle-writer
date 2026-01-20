@@ -354,388 +354,177 @@ export function BlueprintContent() {
         </h2>
         
         <div className="space-y-3">
-          {/* 1. Problem/Symptom Awareness */}
-          <CollapsibleSection title="1. Problem/Symptom Awareness Listicle">
-            <ExampleImage 
-              src="https://firebasestorage.googleapis.com/v0/b/poppy-ai-16252.appspot.com/o/uploads%2Fv4PTbelDBaYNNmbskPGQOrEVz4T2_1763298483848_lf0jq2_Create%20Listicle%202.png?alt=media&token=3fdc3040-88ae-458e-964a-4d3db72d8c82"
-              alt="Problem/Symptom Awareness Listicle Example"
-            />
-            <div className="space-y-3 text-sm">
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Headline:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">"5 Signs You Need to Add [Product/Category] to Your Daily Routine"</span>
-              </div>
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Intro:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">Start with a double-barreled question or pain point. Validate with a stat or "you're not alone." Tease the list.</span>
-              </div>
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Each Reason:</span>
-                <ul className="mt-1 ml-4 space-y-1 text-slate-600 dark:text-slate-400">
-                  <li>• Numbered, bolded, specific</li>
-                  <li>• "You" scenario</li>
-                  <li>• Simple explanation</li>
-                  <li>• Agitate with "what this means"</li>
-                  <li>• Visual</li>
-                  <li>• Transition</li>
-                </ul>
-              </div>
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">After 3–5 reasons:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">Product intro as "diagnosis" moment, bulleted benefits</span>
-              </div>
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Offer/CTA:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">"Try [Product] risk-free for [X] days." [Claim My Discount]</span>
-              </div>
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">FAQ:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">4–6 real objections</span>
-              </div>
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Final CTA:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">Recap, restate offer, CTA</span>
-              </div>
-            </div>
-          </CollapsibleSection>
-
-          {/* 2. Comparison/Category Switch */}
-          <CollapsibleSection title="2. Comparison/Category Switch Listicle">
-            <ExampleImage 
-              src="https://firebasestorage.googleapis.com/v0/b/poppy-ai-16252.appspot.com/o/uploads%2Fv4PTbelDBaYNNmbskPGQOrEVz4T2_1763298479402_elpfkc_Carpe%20Listicle%201.png?alt=media&token=1f2d1f32-3b97-4393-9f80-e7836c58a769"
-              alt="Comparison/Category Switch Listicle Example"
-            />
-            <div className="space-y-3 text-sm">
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Headline:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">"10 Reasons to Ditch [Old Solution] For [New Solution/Category]"</span>
-              </div>
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Intro:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">Acknowledge the old solution, tease the new way.</span>
-              </div>
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Each Reason:</span>
-                <ul className="mt-1 ml-4 space-y-1 text-slate-600 dark:text-slate-400">
-                  <li>• Numbered, bolded, "problem with the old way"</li>
-                  <li>• "You" frustration</li>
-                  <li>• Why old way fails</li>
-                  <li>• New way as solution</li>
-                  <li>• Visual</li>
-                  <li>• Transition</li>
-                </ul>
-              </div>
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">After 3–5 reasons:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">Product intro as "solution reveal," bulleted benefits</span>
-              </div>
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Offer/CTA:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">"Get [X]% off for a limited time." [Shop Now]</span>
-              </div>
-            </div>
-          </CollapsibleSection>
-
-          {/* 3. Social Proof/Reasons to Buy */}
-          <CollapsibleSection title="3. Social Proof/Reasons to Buy Listicle">
-            <ExampleImage 
-              src="https://firebasestorage.googleapis.com/v0/b/poppy-ai-16252.appspot.com/o/uploads%2Fv4PTbelDBaYNNmbskPGQOrEVz4T2_1763298468805_zhheil_Hexclad%20Listicle%201.png?alt=media&token=969e593d-fbe8-4727-a81f-3460ec7f3174"
-              alt="Social Proof/Reasons to Buy Listicle Example"
-            />
-            <div className="space-y-3 text-sm">
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Headline:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">"5 Reasons 1,000,000+ [Audience] Are Making The Switch"</span>
-              </div>
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Intro:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">"Over 1,000,000 [audience] have made the switch. Here's why."</span>
-              </div>
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Each Reason:</span>
-                <ul className="mt-1 ml-4 space-y-1 text-slate-600 dark:text-slate-400">
-                  <li>• Numbered, bolded, benefit-driven</li>
-                  <li>• "You" scenario</li>
-                  <li>• Proof/testimonial</li>
-                  <li>• Visual</li>
-                  <li>• Transition</li>
-                </ul>
-              </div>
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Offer/CTA:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">"Up to [X]% off best-selling sets." [Shop Now]</span>
-              </div>
-            </div>
-          </CollapsibleSection>
-
-          {/* 4. Expert/Celebrity Endorsement */}
-          <CollapsibleSection title="4. Expert/Celebrity Endorsement Listicle">
-            <ExampleImage 
-              src="https://firebasestorage.googleapis.com/v0/b/poppy-ai-16252.appspot.com/o/uploads%2Fv4PTbelDBaYNNmbskPGQOrEVz4T2_1763298485997_f92is1_Create%20Listicle%201.png?alt=media&token=aad64dbd-481c-474d-9e3c-d3d55f83faa1"
-              alt="Expert/Celebrity Endorsement Listicle Example"
-            />
-            <div className="space-y-3 text-sm">
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Headline:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">"5 Reasons Why [Expert] Loves [Product]"</span>
-              </div>
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Intro:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">"Meet [Expert]: [Credentials/Authority]. For [X] years, [Expert] has helped [audience] achieve [result]. Here's why they recommend [Product]."</span>
-              </div>
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Each Reason:</span>
-                <ul className="mt-1 ml-4 space-y-1 text-slate-600 dark:text-slate-400">
-                  <li>• Numbered, bolded, expert-quoted</li>
-                  <li>• Expert quote</li>
-                  <li>• Explanation</li>
-                  <li>• Visual</li>
-                  <li>• Transition</li>
-                </ul>
-              </div>
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Offer/CTA:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">"Use code [EXPERT] for [X]% off." [Claim [Expert]'s Discount]</span>
-              </div>
-            </div>
-          </CollapsibleSection>
-
-          {/* 5. Review/Editorial/First-Person */}
-          <CollapsibleSection title="5. Review/Editorial/First-Person Listicle">
+          {/* 1. First-Person Review */}
+          <CollapsibleSection title="1. First-Person Review" defaultOpen={true}>
             <ExampleImage 
               src="https://firebasestorage.googleapis.com/v0/b/poppy-ai-16252.appspot.com/o/uploads%2Fv4PTbelDBaYNNmbskPGQOrEVz4T2_1763298458077_0n5poi_Gru%CC%88ns%20Listicle%201.png?alt=media&token=ed852c87-6d33-4ed4-99e7-03f370e0f7bb"
-              alt="Review/Editorial/First-Person Listicle Example"
+              alt="First-Person Review Listicle Example"
             />
             <div className="space-y-3 text-sm">
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Headline:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">"I Tried [Product]—Here's My Honest Review"</span>
+              <div className="p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg border border-blue-200 dark:border-blue-800">
+                <span className="font-semibold text-blue-900 dark:text-blue-200">Voice:</span>
+                <span className="text-blue-700 dark:text-blue-300 ml-2">Personal, experiential, "I tested it so you don't have to"</span>
               </div>
               <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Intro:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">"As a [role], I'm always looking for [desired outcome]. I'd heard about [Product] everywhere, so I decided to try it for myself."</span>
+                <span className="font-semibold text-slate-900 dark:text-white">Best for:</span>
+                <span className="text-slate-600 dark:text-slate-400 ml-2">Products that benefit from personal testimony—supplements, skincare, lifestyle products</span>
               </div>
               <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Each Reason:</span>
+                <span className="font-semibold text-slate-900 dark:text-white">Example Headlines:</span>
                 <ul className="mt-1 ml-4 space-y-1 text-slate-600 dark:text-slate-400">
-                  <li>• Numbered, bolded, experience-driven</li>
-                  <li>• Personal experience</li>
-                  <li>• Explanation</li>
-                  <li>• Visual</li>
-                  <li>• Transition</li>
+                  <li>• "I Tried Grüns Gummies for 30 Days—Here Are 5 Things That Happened"</li>
+                  <li>• "5 Reasons I Ditched My Old Laundry Detergent for Laundry Sauce"</li>
+                  <li>• "I Was Skeptical About Mouth Tape—Then These 5 Things Changed My Mind"</li>
                 </ul>
               </div>
               <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Offer/CTA:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">"Start Here" [Shop Now]</span>
+                <span className="font-semibold text-slate-900 dark:text-white">Structure:</span>
+                <ul className="mt-1 ml-4 space-y-1 text-slate-600 dark:text-slate-400">
+                  <li>• <strong>Intro:</strong> Personal context + skepticism/curiosity</li>
+                  <li>• <strong>Each item:</strong> "I noticed…", "What surprised me…", "The result was…"</li>
+                  <li>• <strong>Tone:</strong> Honest, relatable, specific observations</li>
+                  <li>• <strong>CTA:</strong> "If you're like me…" or "Try it yourself"</li>
+                </ul>
               </div>
             </div>
           </CollapsibleSection>
 
-          {/* 6. Kit/Bundle Breakdown */}
-          <CollapsibleSection title="6. Kit/Bundle Breakdown Listicle">
+          {/* 2. Problem Awareness */}
+          <CollapsibleSection title="2. Problem Awareness">
             <ExampleImage 
-              src="https://firebasestorage.googleapis.com/v0/b/poppy-ai-16252.appspot.com/o/uploads%2Fv4PTbelDBaYNNmbskPGQOrEVz4T2_1763298462429_47302k_Jones%20Road%20Listicle%202.png?alt=media&token=39052605-cc4f-4f84-900e-8bc7306da1af"
-              alt="Kit/Bundle Breakdown Listicle Example"
+              src="https://firebasestorage.googleapis.com/v0/b/poppy-ai-16252.appspot.com/o/uploads%2Fv4PTbelDBaYNNmbskPGQOrEVz4T2_1763298483848_lf0jq2_Create%20Listicle%202.png?alt=media&token=3fdc3040-88ae-458e-964a-4d3db72d8c82"
+              alt="Problem Awareness Listicle Example"
             />
             <div className="space-y-3 text-sm">
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Headline:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">"5 Reasons Why This [Kit/Bundle] Is a Must-Have"</span>
+              <div className="p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg border border-blue-200 dark:border-blue-800">
+                <span className="font-semibold text-blue-900 dark:text-blue-200">Voice:</span>
+                <span className="text-blue-700 dark:text-blue-300 ml-2">Educational, diagnostic, "you might not realize this but…"</span>
               </div>
               <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Intro:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">"This kit is only available for a limited time and includes products you can't get anywhere else."</span>
+                <span className="font-semibold text-slate-900 dark:text-white">Best for:</span>
+                <span className="text-slate-600 dark:text-slate-400 ml-2">Health, wellness, performance products—anything where the customer may not know they have a problem</span>
               </div>
               <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Each Reason:</span>
+                <span className="font-semibold text-slate-900 dark:text-white">Example Headlines:</span>
                 <ul className="mt-1 ml-4 space-y-1 text-slate-600 dark:text-slate-400">
-                  <li>• Numbered, bolded, feature/benefit-driven</li>
-                  <li>• Explanation</li>
-                  <li>• Visual</li>
-                  <li>• Transition</li>
+                  <li>• "5 Signs You're Dehydrated (And Don't Even Know It)"</li>
+                  <li>• "5 Warning Signs Your Sleep Quality Is Sabotaging Your Day"</li>
+                  <li>• "5 Hidden Signs Your Cookware Is Ruining Your Food"</li>
                 </ul>
               </div>
               <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Offer/CTA:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">"[X]% discount for a limited time" [Shop the Kit]</span>
+                <span className="font-semibold text-slate-900 dark:text-white">Structure:</span>
+                <ul className="mt-1 ml-4 space-y-1 text-slate-600 dark:text-slate-400">
+                  <li>• <strong>Intro:</strong> "Do you ever…?" + validation</li>
+                  <li>• <strong>Each item:</strong> Symptom → Why it happens → What it means</li>
+                  <li>• <strong>Tone:</strong> Empathetic, revealing, creates "aha" moments</li>
+                  <li>• <strong>Product intro:</strong> "The good news is…" after 3-5 items</li>
+                </ul>
               </div>
             </div>
           </CollapsibleSection>
 
-          {/* 7. How-To/Routine */}
-          <CollapsibleSection title="7. How-To/Routine Listicle">
+          {/* 3. Social Proof & Authority */}
+          <CollapsibleSection title="3. Social Proof & Authority">
             <ExampleImage 
-              src="https://firebasestorage.googleapis.com/v0/b/poppy-ai-16252.appspot.com/o/uploads%2Fv4PTbelDBaYNNmbskPGQOrEVz4T2_1763298431656_ldlnj9_Ogee%20Listicle%203.png?alt=media&token=466f799d-d0a1-4d52-9d66-0469a7b00095"
-              alt="How-To/Routine Listicle Example"
+              src="https://firebasestorage.googleapis.com/v0/b/poppy-ai-16252.appspot.com/o/uploads%2Fv4PTbelDBaYNNmbskPGQOrEVz4T2_1763298468805_zhheil_Hexclad%20Listicle%201.png?alt=media&token=969e593d-fbe8-4727-a81f-3460ec7f3174"
+              alt="Social Proof & Authority Listicle Example"
             />
             <div className="space-y-3 text-sm">
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Headline:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">"How to [Achieve Desired Result] in [X Steps]"</span>
+              <div className="p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg border border-blue-200 dark:border-blue-800">
+                <span className="font-semibold text-blue-900 dark:text-blue-200">Voice:</span>
+                <span className="text-blue-700 dark:text-blue-300 ml-2">Credibility-driven, "experts agree", "thousands have switched"</span>
               </div>
               <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Intro:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">"Tired of [pain]? Here's how to [achieve result] in just [X] steps."</span>
+                <span className="font-semibold text-slate-900 dark:text-white">Best for:</span>
+                <span className="text-slate-600 dark:text-slate-400 ml-2">Products with celebrity endorsements, expert backing, or strong customer numbers</span>
               </div>
               <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Each Step:</span>
+                <span className="font-semibold text-slate-900 dark:text-white">Example Headlines:</span>
                 <ul className="mt-1 ml-4 space-y-1 text-slate-600 dark:text-slate-400">
-                  <li>• Step headline</li>
-                  <li>• Instruction</li>
-                  <li>• Explanation/why</li>
-                  <li>• Visual</li>
-                  <li>• Transition</li>
+                  <li>• "5 Reasons Gordon Ramsay Only Uses HexClad in His Kitchen"</li>
+                  <li>• "5 Reasons 500,000+ Home Chefs Made the Switch to HexClad"</li>
+                  <li>• "5 Reasons Dermatologists Recommend Ogee for Sensitive Skin"</li>
                 </ul>
               </div>
               <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Recap/CTA:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">Recap outcome, restate benefit, CTA</span>
+                <span className="font-semibold text-slate-900 dark:text-white">Structure:</span>
+                <ul className="mt-1 ml-4 space-y-1 text-slate-600 dark:text-slate-400">
+                  <li>• <strong>Intro:</strong> Authority hook (expert name, customer count, award)</li>
+                  <li>• <strong>Each item:</strong> Quote or stat → Why it matters → Proof point</li>
+                  <li>• <strong>Tone:</strong> Third-party validation, trust signals throughout</li>
+                  <li>• <strong>CTA:</strong> "Join 500,000+ customers" or "See why [Expert] recommends it"</li>
+                </ul>
               </div>
             </div>
           </CollapsibleSection>
 
-          {/* 8. Myth-Busting/Educational */}
-          <CollapsibleSection title="8. Myth-Busting/Educational Listicle">
+          {/* 4. Comparison */}
+          <CollapsibleSection title="4. Comparison">
             <ExampleImage 
-              src="https://firebasestorage.googleapis.com/v0/b/poppy-ai-16252.appspot.com/o/uploads%2Fv4PTbelDBaYNNmbskPGQOrEVz4T2_1763298441969_knox8w_Hostage%20Tape%20Listicle%202.png?alt=media&token=9793950e-0b51-44a7-915e-6afaf29b47d1"
-              alt="Myth-Busting/Educational Listicle Example"
+              src="https://firebasestorage.googleapis.com/v0/b/poppy-ai-16252.appspot.com/o/uploads%2Fv4PTbelDBaYNNmbskPGQOrEVz4T2_1763298479402_elpfkc_Carpe%20Listicle%201.png?alt=media&token=1f2d1f32-3b97-4393-9f80-e7836c58a769"
+              alt="Comparison Listicle Example"
             />
             <div className="space-y-3 text-sm">
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Headline:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">"7 Myths About [Product/Category]" or "10 Things You Didn't Know About [Problem/Solution]"</span>
+              <div className="p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg border border-blue-200 dark:border-blue-800">
+                <span className="font-semibold text-blue-900 dark:text-blue-200">Voice:</span>
+                <span className="text-blue-700 dark:text-blue-300 ml-2">Contrast-driven, "old way vs. new way", "why X beats Y"</span>
               </div>
               <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Intro:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">"Most people think [myth], but the truth is…"</span>
+                <span className="font-semibold text-slate-900 dark:text-white">Best for:</span>
+                <span className="text-slate-600 dark:text-slate-400 ml-2">Market disruption, category switching, "better alternative" positioning</span>
               </div>
               <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Each Item:</span>
+                <span className="font-semibold text-slate-900 dark:text-white">Example Headlines:</span>
                 <ul className="mt-1 ml-4 space-y-1 text-slate-600 dark:text-slate-400">
-                  <li>• Numbered, bolded, myth/truth-driven</li>
-                  <li>• Myth</li>
-                  <li>• Truth</li>
-                  <li>• Explanation</li>
-                  <li>• Visual</li>
-                  <li>• Transition</li>
+                  <li>• "5 Reasons to Ditch Regular Detergent for Laundry Sauce"</li>
+                  <li>• "5 Ways Carpe Outperforms Traditional Antiperspirants"</li>
+                  <li>• "5 Reasons Flaus Beats Regular Dental Floss"</li>
                 </ul>
               </div>
               <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Offer/CTA:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">"Try [Product] risk-free." [Shop Now]</span>
+                <span className="font-semibold text-slate-900 dark:text-white">Structure:</span>
+                <ul className="mt-1 ml-4 space-y-1 text-slate-600 dark:text-slate-400">
+                  <li>• <strong>Intro:</strong> Acknowledge the old solution, tease the upgrade</li>
+                  <li>• <strong>Each item:</strong> Old way problem → New way solution → Benefit</li>
+                  <li>• <strong>Tone:</strong> Educational, not attacking—show why it's better</li>
+                  <li>• <strong>CTA:</strong> "Make the switch" or "Try the upgrade"</li>
+                </ul>
               </div>
             </div>
           </CollapsibleSection>
 
-          {/* 9. Urgency/Trend */}
-          <CollapsibleSection title="9. Urgency/Trend Listicle">
-            <ExampleImage 
-              src="https://firebasestorage.googleapis.com/v0/b/poppy-ai-16252.appspot.com/o/uploads%2Fv4PTbelDBaYNNmbskPGQOrEVz4T2_1763298473261_xym9dh_Javvy%20Listicle%202.png?alt=media&token=60e612ab-2735-40ea-b50e-58834446f5d6"
-              alt="Urgency/Trend Listicle Example"
-            />
-            <div className="space-y-3 text-sm">
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Headline:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">"7 Reasons to Try [Product] Before [Event/Deadline]" or "12 Reasons [Product] Is the Trend of [Year]"</span>
-              </div>
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Intro:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">"This is the trend everyone's talking about. Here's why you need to try it now."</span>
-              </div>
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Each Item:</span>
-                <ul className="mt-1 ml-4 space-y-1 text-slate-600 dark:text-slate-400">
-                  <li>• Numbered, bolded, trend/benefit-driven</li>
-                  <li>• Explanation</li>
-                  <li>• Visual</li>
-                  <li>• Transition</li>
-                </ul>
-              </div>
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Offer/CTA:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">"Black Friday VIP access: up to 60% off and free gifts." [Get VIP Access]</span>
-              </div>
-            </div>
-          </CollapsibleSection>
-
-          {/* 10. Mistake/"You're Doing It Wrong" */}
-          <CollapsibleSection title={`10. Mistake/"You're Doing It Wrong" Listicle`}>
-            <ExampleImage 
-              src="https://firebasestorage.googleapis.com/v0/b/poppy-ai-16252.appspot.com/o/uploads%2Fv4PTbelDBaYNNmbskPGQOrEVz4T2_1763298441969_knox8w_Hostage%20Tape%20Listicle%202.png?alt=media&token=9793950e-0b51-44a7-915e-6afaf29b47d1"
-              alt="Mistake - You're Doing It Wrong Listicle Example"
-            />
-            <div className="space-y-3 text-sm">
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Headline:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">"5 Mistakes You're Making With [Product/Category]" or "10 Reasons You're Not Getting Results With [Product/Category]"</span>
-              </div>
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Intro:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">"You're not getting results because you're making these mistakes…"</span>
-              </div>
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Each Item:</span>
-                <ul className="mt-1 ml-4 space-y-1 text-slate-600 dark:text-slate-400">
-                  <li>• Numbered, bolded, mistake-driven</li>
-                  <li>• Scenario</li>
-                  <li>• Consequence</li>
-                  <li>• Science/proof</li>
-                  <li>• Visual</li>
-                  <li>• Transition</li>
-                </ul>
-              </div>
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Offer/CTA:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">"Try [Product] risk-free." [Shop Now]</span>
-              </div>
-            </div>
-          </CollapsibleSection>
-
-          {/* 11. Hybrid */}
-          <CollapsibleSection title="11. Hybrid Listicles">
+          {/* 5. Hybrid */}
+          <CollapsibleSection title="5. Hybrid (Mix & Match)">
             <ExampleImage 
               src="https://firebasestorage.googleapis.com/v0/b/poppy-ai-16252.appspot.com/o/uploads%2Fv4PTbelDBaYNNmbskPGQOrEVz4T2_1763298468805_zhheil_Hexclad%20Listicle%201.png?alt=media&token=969e593d-fbe8-4727-a81f-3460ec7f3174"
               alt="Hybrid Listicle Example"
             />
             <div className="space-y-3 text-sm">
-              <ul className="ml-4 space-y-1 text-slate-600 dark:text-slate-400">
-                <li>• Pick two or more types (e.g., social proof + comparison + feature/benefit)</li>
-                <li>• Structure the list so each reason covers a different angle</li>
-                <li>• Use testimonials, stats, and product images throughout</li>
-                <li>• End with a strong offer and CTA</li>
-              </ul>
-            </div>
-          </CollapsibleSection>
-
-          {/* 12. Persona/"Reasons to Love" */}
-          <CollapsibleSection title={`12. Persona/"Reasons to Love" Listicle`}>
-            <ExampleImage 
-              src="https://firebasestorage.googleapis.com/v0/b/poppy-ai-16252.appspot.com/o/uploads%2Fv4PTbelDBaYNNmbskPGQOrEVz4T2_1763298453596_sh2e63_Polishpops%20Listicle%201.png?alt=media&token=ab41e958-3c90-4ef3-b367-c3aa578771db"
-              alt="Persona/Reasons to Love Listicle Example"
-            />
-            <div className="space-y-3 text-sm">
-              <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Headline:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">"5 Reasons Why Thousands of Women Are Switching to [Product]"</span>
+              <div className="p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg border border-blue-200 dark:border-blue-800">
+                <span className="font-semibold text-blue-900 dark:text-blue-200">Voice:</span>
+                <span className="text-blue-700 dark:text-blue-300 ml-2">Flexible, combines multiple angles for maximum persuasion</span>
               </div>
               <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Subheadline:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">Direct benefit statement ("Gel Polish Pops' gel manicures are your quick and easy way to get a picture-perfect manicure that lasts 14+ days.")</span>
+                <span className="font-semibold text-slate-900 dark:text-white">Best for:</span>
+                <span className="text-slate-600 dark:text-slate-400 ml-2">Products with multiple selling angles—benefits, social proof, comparisons all in one</span>
               </div>
               <div>
-                <span className="font-semibold text-slate-900 dark:text-white">Each Reason:</span>
+                <span className="font-semibold text-slate-900 dark:text-white">Example Headlines:</span>
                 <ul className="mt-1 ml-4 space-y-1 text-slate-600 dark:text-slate-400">
-                  <li>• Benefit-driven headline ("Easily Get a Manicure in Minutes")</li>
-                  <li>• Short, direct explanation</li>
-                  <li>• Visual (product, hands, packaging)</li>
-                  <li>• Testimonial (if present)</li>
-                  <li>• Transition to next reason</li>
+                  <li>• "5 Reasons HexClad Is Taking Over Home Kitchens"</li>
+                  <li>• "5 Things That Make Javvy Different From Regular Coffee"</li>
+                  <li>• "5 Reasons Jones Road Beauty Is Worth the Hype"</li>
                 </ul>
               </div>
               <div>
-                <span className="font-semibold text-slate-900 dark:text-white">CTA and badges:</span>
-                <span className="text-slate-600 dark:text-slate-400 ml-2">"Shop Now," badges for credibility</span>
+                <span className="font-semibold text-slate-900 dark:text-white">Structure:</span>
+                <ul className="mt-1 ml-4 space-y-1 text-slate-600 dark:text-slate-400">
+                  <li>• <strong>Item 1-2:</strong> Problem awareness or comparison angle</li>
+                  <li>• <strong>Item 3:</strong> Social proof (testimonial, stat, or expert quote)</li>
+                  <li>• <strong>Item 4-5:</strong> Feature/benefit driven with specific outcomes</li>
+                  <li>• <strong>Tone:</strong> Varied but cohesive—each item builds on the last</li>
+                </ul>
               </div>
             </div>
           </CollapsibleSection>
