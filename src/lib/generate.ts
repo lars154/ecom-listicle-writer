@@ -117,10 +117,26 @@ Each numbered item should:
 **TIMING:** After 3-5 list items, introduce the product as the natural "answer."
 
 **Structure:**
-1. **Transition sentence** - "It's never been easier to see the difference for yourself."
+1. **Transition sentence** - Make it SPECIFIC to the problems discussed (NOT generic filler)
 2. **Product introduction** - Position as the solution to everything discussed
 3. **3-5 bullet benefits** - Key product differentiators
 4. **Social proof moment** - Customer count, testimonial, or rating
+
+**⚠️ BANNED PRODUCT INTRO PHRASES (lazy, overused transitions):**
+NEVER use these generic phrases:
+- "Here's what makes it different"
+- "Here's what sets it apart"
+- "What makes [product] different is..."
+- "That's where [product] comes in"
+- "Enter [product]"
+- "Meet [product]" (when used as a lazy transition)
+
+INSTEAD, write transitions that continue the story naturally:
+- Reference a specific symptom: "If [specific problem from list] sounds familiar, there's finally a fix"
+- Diagnosis moment: "Sound familiar? Most people are missing one key thing"
+- Social proof bridge: "That's why 500,000+ people have already made the switch"
+- Direct benefit hook: "The solution is simpler than you think"
+- Urgency: "The good news? There's a science-backed way to fix this"
 
 ---
 
@@ -432,6 +448,20 @@ The headline sets the NARRATIVE FRAME for the entire listicle. The content MUST 
 - Use ONLY provided testimonials, review snippets, and verified stats from the product brief
 - NEVER fabricate fake customer quotes, made-up names, or invented proof
 
+⚠️ **PRODUCT REVEAL TRANSITIONS - NO LAZY PHRASES**
+When introducing the product in the Product Reveal section, NEVER use these generic, overused phrases:
+- "Here's what makes it different"
+- "Here's what sets it apart"
+- "What makes [product] different is..."
+- "That's where [product] comes in"
+- "Enter [product]"
+
+INSTEAD, write transitions that feel like a natural continuation of the story:
+- Reference a specific problem you just discussed
+- Use a diagnosis moment: "If any of these sound familiar, your [root cause] might need support"
+- Create urgency: "The good news? There's a science-backed solution"
+- Use social proof as bridge: "That's exactly why 500,000+ people have already switched"
+
 # Output requirements
 
 You MUST output well-formatted, beautiful Markdown that's easy to read and copy. Structure it for maximum clarity and usability.
@@ -573,7 +603,7 @@ Generate clean, well-formatted Markdown with CLEAR SECTIONS using ## headings.
 [Continue for all list items - each as separate ## section]
 
 ## Product Reveal
-[After list items 3-5. Transition + product intro + bullet benefits + social proof]
+[After list items 3-5. Write a SPECIFIC transition that references the problems discussed - NEVER use "Here's what makes it different" or similar lazy phrases. Then product intro + bullet benefits + social proof]
 
 ## The Offer
 [Offer headline + urgency + value stack + CTA + risk reversal]
