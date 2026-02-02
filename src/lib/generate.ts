@@ -337,7 +337,10 @@ export async function generateListicle(
       response = await anthropic.messages.create({
         model: 'claude-opus-4-5-20251101',
         max_tokens: 16000,
-        temperature: 0.8,
+        thinking: {
+          type: 'enabled',
+          budget_tokens: 10000,
+        },
         system: systemPrompt,
         messages: [
           {
@@ -711,9 +714,12 @@ Return ONLY valid JSON with 5 different headline options.`;
   for (let attempt = 1; attempt <= 3; attempt++) {
     try {
       response = await anthropic.messages.create({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 2000,
-        temperature: 0.7,
+        model: 'claude-opus-4-5-20251101',
+        max_tokens: 4000,
+        thinking: {
+          type: 'enabled',
+          budget_tokens: 8000,
+        },
         system: systemPrompt,
         messages: [{ role: 'user', content: userPrompt }],
       });
@@ -791,7 +797,10 @@ ${basePrompt}
       response = await anthropic.messages.create({
         model: 'claude-opus-4-5-20251101',
         max_tokens: 16000,
-        temperature: 0.8,
+        thinking: {
+          type: 'enabled',
+          budget_tokens: 10000,
+        },
         system: systemPrompt,
         messages: [{ role: 'user', content: userPrompt }],
       });

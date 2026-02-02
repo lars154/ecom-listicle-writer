@@ -48,7 +48,10 @@ export async function POST(request: NextRequest) {
         response = await anthropic.messages.create({
           model: 'claude-opus-4-5-20251101',
           max_tokens: 16000,
-          temperature: 1,
+          thinking: {
+            type: 'enabled',
+            budget_tokens: 10000,
+          },
           system: systemPrompt,
           messages: [
             {

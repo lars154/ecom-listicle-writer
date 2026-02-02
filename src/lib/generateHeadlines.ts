@@ -214,9 +214,12 @@ Return ONLY valid JSON.`;
   for (let attempt = 1; attempt <= 3; attempt++) {
     try {
       response = await anthropic.messages.create({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 2000,
-        temperature: 0.7, // Lowered from 1 for more consistent quality
+        model: 'claude-opus-4-5-20251101',
+        max_tokens: 4000,
+        thinking: {
+          type: 'enabled',
+          budget_tokens: 8000,
+        },
         system: systemPrompt,
         messages: [{ role: 'user', content: userPrompt }],
       });
